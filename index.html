@@ -49,7 +49,7 @@
     }
 
     /* ═════════════════════════════════════════════════════════════════
-       CAR DRIFT REAL VIDEO SPLASH SCREEN (3 SECONDS DURATION)
+       CAR DRIFT REAL VIDEO SPLASH SCREEN (4 SECONDS DURATION)
        ═════════════════════════════════════════════════════════════════ */
     #splash {
       position: fixed;
@@ -62,13 +62,16 @@
       align-items: center;
       padding: 30px 24px;
       overflow: hidden;
-      transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), 
-                  transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+      transition: opacity 1s cubic-bezier(0.65, 0, 0.35, 1), 
+                  transform 1s cubic-bezier(0.65, 0, 0.35, 1),
+                  filter 1s ease;
+      will-change: opacity, transform, filter;
     }
 
     #splash.fade-out {
       opacity: 0;
-      transform: scale(1.06);
+      transform: scale(1.08);
+      filter: blur(12px);
       pointer-events: none;
     }
 
@@ -242,7 +245,7 @@
       width: 0%;
       background: linear-gradient(90deg, #ff1e27, #ff9500, #ffeb3b);
       box-shadow: 0 0 15px rgba(255, 30, 39, 0.9);
-      animation: fillTimer 3s linear forwards;
+      animation: fillTimer 4s linear forwards;
     }
 
     @keyframes fillTimer { 0% { width: 0%; } 100% { width: 100%; } }
@@ -260,8 +263,9 @@
        ═════════════════════════════════════════════════════════════════ */
     #main-app {
       opacity: 0;
-      transform: translateY(15px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: scale(0.985);
+      transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), 
+                  transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
       position: relative;
       background: var(--bg-black);
       overflow-x: hidden;
@@ -270,7 +274,7 @@
 
     #main-app.active {
       opacity: 1;
-      transform: translateY(0);
+      transform: scale(1);
     }
 
     /* Red Scratch Marks SVG and Background Lights */
@@ -1721,7 +1725,7 @@
         <span class="hud-dot"></span>
         <span>MEQNZO 2K26 // TRACK DRIFT INTRO</span>
       </div>
-      <div class="hud-timer" id="splashTimer">03.00s</div>
+      <div class="hud-timer" id="splashTimer">04.00s</div>
       <button class="skip-splash-btn" onclick="removeSplash()">SKIP INTRO &rarr;</button>
     </div>
 
@@ -1742,7 +1746,7 @@
       <div class="splash-track">
         <div class="splash-fill" id="splashFill"></div>
       </div>
-      <div class="splash-hint">Opening website in 3 seconds...</div>
+      <div class="splash-hint">Opening website in 4 seconds...</div>
     </div>
 
   </div>
@@ -2239,7 +2243,7 @@
        JAVASCRIPT: 3-SECOND TIMER & REMOVE SPLASH
        ═════════════════════════════════════════════════════════════════ -->
   <script>
-    const DURATION = 3000; // Exact 3 Seconds
+    const DURATION = 4000; // Exact 4 Seconds
     let startTime = null;
     let isRemoved = false;
 
@@ -2278,10 +2282,10 @@
       if (isRemoved) return;
       isRemoved = true;
 
-      // 1. Fade out splash
+      // 1. Fade out splash with cinematic blur/zoom transition
       splash.classList.add('fade-out');
 
-      // 2. Reveal main website
+      // 2. Reveal main website with zoom-in crossfade
       mainApp.classList.add('active');
 
       // Start 3D Mechanical Sparks Engine
@@ -2293,7 +2297,7 @@
         if (splash && splash.parentNode) {
           splash.parentNode.removeChild(splash);
         }
-      }, 800);
+      }, 1100);
     }
 
     // ═════════════════════════════════════════════════════════════════
