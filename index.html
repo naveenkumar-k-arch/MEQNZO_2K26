@@ -2422,7 +2422,8 @@
     }
 
     // ═════════════════════════════════════════════════════════════════
-    // 3D DYNAMICS: MECHANICAL SPARKS ENGINE, 3D CARD TILT & PARALLAX
+    // ⚡ THUNDERSTORM ELECTRIC SHOCK WAVE ENGINE ⚡
+    // Lightning bolts • Electric arcs • Plasma rings • Mouse electricity
     // ═════════════════════════════════════════════════════════════════
     function initSparkEffects() {
       const canvas = document.getElementById('fireCanvas');
@@ -2433,195 +2434,279 @@
       let height = (canvas.height = window.innerHeight);
 
       window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
+        width = canvas.width = document.documentElement.clientWidth;
         height = canvas.height = window.innerHeight;
       });
 
-      // ── 3D MECHANICAL SPARK SIMULATION ENGINE ──
-      const sparks = [];
-      const MAX_SPARKS = 65;
+      // ── ELECTRIC COLOR PALETTE ──
+      const ELEC_COLORS = ['#ffffff', '#00cfff', '#7df9ff', '#a78bfa', '#60efff', '#ff1e27', '#ffec3d'];
 
-      let mouseParallaxX = 0;
-      let mouseParallaxY = 0;
-      let lastMouseX = width / 2;
-      let lastMouseY = height / 2;
-
-      class Spark {
-        constructor(x, y, isBurst = false, isLogoEmitter = false, initialVx = 0, initialVy = 0) {
-          this.reset(x, y, isBurst, isLogoEmitter, initialVx, initialVy);
-        }
-
-        reset(x, y, isBurst = false, isLogoEmitter = false, initialVx = 0, initialVy = 0) {
-          this.isBurst = isBurst;
-          this.isLogoEmitter = isLogoEmitter;
-          this.z = Math.random() * 1.5 + 0.6; // 3D depth layer
-
-          if (isLogoEmitter) {
-            // Mechanical Gear Friction / Grinding Sparks from Logo
-            const logoEl = document.getElementById('heroLogoImg');
-            if (logoEl) {
-              const rect = logoEl.getBoundingClientRect();
-              const angle = Math.random() * Math.PI * 2;
-              const radius = (rect.width / 2) * 0.9;
-              this.x = rect.left + rect.width / 2 + Math.cos(angle) * radius;
-              this.y = rect.top + rect.height / 2 + Math.sin(angle) * radius;
-              
-              // Spray tangentially & outward like a spinning mechanical gear
-              const speed = (Math.random() * 4.8 + 2.2) * this.z;
-              const sprayAngle = angle + (Math.random() - 0.5) * 0.9;
-              this.vx = Math.cos(sprayAngle) * speed;
-              this.vy = Math.sin(sprayAngle) * speed;
-            } else {
-              this.x = width * 0.25;
-              this.y = height * 0.35;
-              this.vx = (Math.random() - 0.5) * 4;
-              this.vy = (Math.random() - 0.5) * 4;
-            }
-            this.life = Math.random() * 34 + 18;
-          } else if (isBurst) {
-            this.x = x;
-            this.y = y;
-            const angle = Math.random() * Math.PI * 2;
-            const speed = (Math.random() * 5.2 + 2.0) * this.z;
-            this.vx = Math.cos(angle) * speed + initialVx * 0.3;
-            this.vy = Math.sin(angle) * speed + initialVy * 0.3;
-            this.life = Math.random() * 30 + 16;
-          } else {
-            // Ambient Atmospheric Sparks
-            this.x = x !== undefined ? x : Math.random() * width;
-            this.y = y !== undefined ? y : Math.random() * height;
-            const speed = (Math.random() * 1.5 + 0.7) * this.z;
-            const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.3;
-            this.vx = Math.cos(angle) * speed;
-            this.vy = Math.sin(angle) * speed;
-            this.life = Math.random() * 85 + 45;
-          }
-
+      // ══════════════════════════════════════════
+      // 1. PLASMA PARTICLE (floating electric dots)
+      // ══════════════════════════════════════════
+      class PlasmaParticle {
+        constructor() { this.respawn(); }
+        respawn() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 0.7;
+          this.vy = (Math.random() - 0.5) * 0.7;
+          this.life = Math.random() * 180 + 80;
           this.maxLife = this.life;
-          this.gravity = 0.08 * this.z;
-          this.drag = 0.982;
-          this.lengthMultiplier = (Math.random() * 2.2 + 1.8) * this.z;
-          this.lineWidth = (Math.random() * 1.4 + 1.0) * this.z;
-
-          // Glowing Spark Colors (White-hot core, Electric Gold, Amber, Ruby)
-          const sparkColors = [
-            '#ffffff', // Pure white hot spark
-            '#fff480', // Electric light gold
-            '#ffcc00', // Intense amber
-            '#ff8800', // Burning orange
-            '#ff3b20'  // Crimson friction
-          ];
-          this.color = sparkColors[Math.floor(Math.random() * sparkColors.length)];
+          this.r = Math.random() * 1.8 + 0.5;
+          this.color = ELEC_COLORS[Math.floor(Math.random() * ELEC_COLORS.length)];
+          this.flicker = Math.random() * Math.PI * 2;
         }
-
         update() {
           this.life--;
-          this.vx *= this.drag;
-          this.vy = this.vy * this.drag + this.gravity;
-
-          // 3D parallax drift
-          const pX = mouseParallaxX * this.z * 0.08;
-          const pY = mouseParallaxY * this.z * 0.06;
-
-          this.x += this.vx + pX;
-          this.y += this.vy + pY;
-
-          if (this.life <= 0 || this.y > height + 50 || this.y < -50 || this.x < -50 || this.x > width + 50) {
-            if (this.isBurst || this.isLogoEmitter) {
-              this.dead = true;
-            } else {
-              this.reset();
-            }
-          }
+          this.x += this.vx;
+          this.y += this.vy;
+          this.flicker += 0.18;
+          if (this.life <= 0) this.respawn();
         }
-
         draw() {
-          const progress = Math.max(0, this.life / this.maxLife);
-          const alpha = progress * (this.isBurst ? 1 : 0.85);
-
+          const prog = this.life / this.maxLife;
+          const flkr = 0.5 + 0.5 * Math.sin(this.flicker);
           ctx.save();
-          ctx.globalAlpha = Math.min(1, Math.max(0, alpha));
-
-          // Motion streak trail (authentic spark needle streak)
-          const speed = Math.hypot(this.vx, this.vy);
-          const streakLen = Math.max(4, speed * this.lengthMultiplier);
-          const normVx = speed > 0.001 ? this.vx / speed : 0;
-          const normVy = speed > 0.001 ? this.vy / speed : -1;
-
-          const tailX = this.x - normVx * streakLen;
-          const tailY = this.y - normVy * streakLen;
-
-          ctx.beginPath();
-          ctx.moveTo(this.x, this.y);
-          ctx.lineTo(tailX, tailY);
-          ctx.lineWidth = Math.max(0.8, this.lineWidth * progress);
-          ctx.lineCap = 'round';
-          ctx.strokeStyle = this.color;
-          ctx.shadowBlur = 4 * this.z;
+          ctx.globalAlpha = prog * flkr * 0.85;
+          ctx.shadowBlur = 10 + flkr * 8;
           ctx.shadowColor = this.color;
-          ctx.stroke();
-
-          // White-hot leading spark point
-          ctx.fillStyle = '#ffffff';
-          ctx.shadowBlur = 6 * this.z;
-          ctx.shadowColor = '#ffffff';
+          ctx.fillStyle = this.color;
           ctx.beginPath();
-          ctx.arc(this.x, this.y, Math.max(0.6, (this.lineWidth * 0.8) * progress), 0, Math.PI * 2);
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
           ctx.fill();
-
           ctx.restore();
         }
       }
 
-      // Populate ambient sparks
-      for (let i = 0; i < 35; i++) {
-        sparks.push(new Spark());
+      // ══════════════════════════════════════════
+      // 2. LIGHTNING BOLT (branching fractal bolt)
+      // ══════════════════════════════════════════
+      function drawBolt(x1, y1, x2, y2, roughness, depth, alpha, color) {
+        if (depth <= 0) return;
+        const mx = (x1 + x2) / 2 + (Math.random() - 0.5) * roughness;
+        const my = (y1 + y2) / 2 + (Math.random() - 0.5) * roughness;
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = depth * 0.9;
+        ctx.shadowBlur = depth * 14;
+        ctx.shadowColor = color;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(mx, my);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        // Branch
+        if (depth > 1 && Math.random() > 0.45) {
+          const bx = mx + (Math.random() - 0.5) * roughness * 1.5;
+          const by = my + Math.random() * roughness * 1.5;
+          drawBolt(mx, my, bx, by, roughness * 0.55, depth - 1, alpha * 0.65, color);
+        }
+        ctx.restore();
+        drawBolt(x1, y1, mx, my, roughness * 0.55, depth - 1, alpha, color);
+        drawBolt(mx, my, x2, y2, roughness * 0.55, depth - 1, alpha, color);
       }
 
-      // Continuous mechanical gear sparks spray from ME logo
+      class LightningBolt {
+        constructor(fromX, fromY, toX, toY, isMouse = false) {
+          this.fromX = fromX; this.fromY = fromY;
+          this.toX = toX; this.toY = toY;
+          this.life = isMouse ? 10 : Math.floor(Math.random() * 10) + 6;
+          this.maxLife = this.life;
+          this.isMouse = isMouse;
+          this.color = isMouse ? '#60efff' : ELEC_COLORS[Math.floor(Math.random() * ELEC_COLORS.length)];
+          this.roughness = isMouse ? 35 : Math.random() * 80 + 60;
+          this.depth = isMouse ? 3 : Math.floor(Math.random() * 2) + 3;
+        }
+        update() { this.life--; }
+        get dead() { return this.life <= 0; }
+        draw() {
+          const alpha = (this.life / this.maxLife) * (this.isMouse ? 0.9 : 0.8);
+          drawBolt(this.fromX, this.fromY, this.toX, this.toY,
+            this.roughness, this.depth, alpha, this.color);
+          // Bright core line
+          ctx.save();
+          ctx.globalAlpha = alpha * 0.6;
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 0.8;
+          ctx.shadowBlur = 20;
+          ctx.shadowColor = this.color;
+          ctx.beginPath();
+          ctx.moveTo(this.fromX, this.fromY);
+          ctx.lineTo(this.toX, this.toY);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      // ══════════════════════════════════════════
+      // 3. PLASMA SHOCKWAVE RING (click / logo)
+      // ══════════════════════════════════════════
+      class ShockwaveRing {
+        constructor(x, y, color = '#00cfff') {
+          this.x = x; this.y = y;
+          this.r = 0;
+          this.maxR = Math.random() * 90 + 60;
+          this.life = 40;
+          this.maxLife = 40;
+          this.color = color;
+        }
+        update() { this.life--; this.r = (1 - this.life / this.maxLife) * this.maxR; }
+        get dead() { return this.life <= 0; }
+        draw() {
+          const alpha = (this.life / this.maxLife) * 0.7;
+          ctx.save();
+          ctx.globalAlpha = alpha;
+          ctx.strokeStyle = this.color;
+          ctx.lineWidth = 2.5 * (this.life / this.maxLife);
+          ctx.shadowBlur = 22;
+          ctx.shadowColor = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+          ctx.stroke();
+          // Inner glow ring
+          ctx.globalAlpha = alpha * 0.35;
+          ctx.lineWidth = 6;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.r * 0.7, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      // ══════════════════════════════════════════
+      // 4. ELECTRIC ARC TENDRIL from logo
+      // ══════════════════════════════════════════
+      class ElectricArc {
+        constructor(ox, oy) {
+          this.ox = ox; this.oy = oy;
+          const angle = Math.random() * Math.PI * 2;
+          const dist = Math.random() * 70 + 35;
+          this.tx = ox + Math.cos(angle) * dist;
+          this.ty = oy + Math.sin(angle) * dist;
+          this.life = Math.floor(Math.random() * 8) + 5;
+          this.maxLife = this.life;
+          this.color = ELEC_COLORS[Math.floor(Math.random() * ELEC_COLORS.length)];
+        }
+        update() { this.life--; }
+        get dead() { return this.life <= 0; }
+        draw() {
+          const alpha = (this.life / this.maxLife) * 0.95;
+          drawBolt(this.ox, this.oy, this.tx, this.ty, 22, 3, alpha, this.color);
+        }
+      }
+
+      // ══════════════════════════════════════════
+      // INITIALIZE SYSTEMS
+      // ══════════════════════════════════════════
+      const plasmas = Array.from({ length: 55 }, () => new PlasmaParticle());
+      const bolts = [];
+      const rings = [];
+      const arcs = [];
+
+      let mouseX = width / 2, mouseY = height / 2;
+      let lastMX = mouseX, lastMY = mouseY;
+      let mouseMoveVel = 0;
+
+      // ── Random sky lightning strikes ──
       setInterval(() => {
-        if (sparks.length < MAX_SPARKS + 25) {
-          sparks.push(new Spark(undefined, undefined, false, true));
-          sparks.push(new Spark(undefined, undefined, false, true));
-        }
-      }, 100);
+        if (Math.random() > 0.35) return;
+        const sx = Math.random() * width;
+        const sy = 0;
+        const ex = sx + (Math.random() - 0.5) * 300;
+        const ey = Math.random() * height * 0.65;
+        bolts.push(new LightningBolt(sx, sy, ex, ey));
+        // Flash ring at strike point
+        if (Math.random() > 0.5) rings.push(new ShockwaveRing(ex, ey, '#a78bfa'));
+      }, 800);
 
-      // Mouse interactive spark shower
+      // ── Electric arcs from ME logo ──
+      setInterval(() => {
+        const logoEl = document.getElementById('heroLogoImg');
+        if (!logoEl) return;
+        const rect = logoEl.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        arcs.push(new ElectricArc(cx, cy));
+        arcs.push(new ElectricArc(cx, cy));
+        if (Math.random() > 0.7) rings.push(new ShockwaveRing(cx, cy, '#ff1e27'));
+      }, 220);
+
+      // ── Mouse moves = electric trail ──
       window.addEventListener('mousemove', (e) => {
-        const dx = e.clientX - lastMouseX;
-        const dy = e.clientY - lastMouseY;
-        lastMouseX = e.clientX;
-        lastMouseY = e.clientY;
+        const dx = e.clientX - lastMX;
+        const dy = e.clientY - lastMY;
+        const vel = Math.hypot(dx, dy);
+        lastMX = mouseX; lastMY = mouseY;
+        mouseX = e.clientX; mouseY = e.clientY;
+        mouseMoveVel = vel;
 
-        if (sparks.length < MAX_SPARKS + 40 && (Math.abs(dx) > 2 || Math.abs(dy) > 2)) {
-          sparks.push(new Spark(e.clientX, e.clientY, true, false, dx * 0.4, dy * 0.4));
+        if (vel > 8) {
+          bolts.push(new LightningBolt(lastMX, lastMY, mouseX, mouseY, true));
         }
       });
 
-      // Click explosive spark impact
+      // ── Click = massive plasma shockwave burst ──
       window.addEventListener('click', (e) => {
-        for (let i = 0; i < 16; i++) {
-          sparks.push(new Spark(e.clientX, e.clientY, true, false));
+        rings.push(new ShockwaveRing(e.clientX, e.clientY, '#00cfff'));
+        rings.push(new ShockwaveRing(e.clientX, e.clientY, '#ffffff'));
+        for (let i = 0; i < 6; i++) {
+          const tx = e.clientX + (Math.random() - 0.5) * 200;
+          const ty = e.clientY + (Math.random() - 0.5) * 200;
+          bolts.push(new LightningBolt(e.clientX, e.clientY, tx, ty, true));
         }
       });
 
-      function animateSparks() {
+      // ── Touch support for mobile ──
+      window.addEventListener('touchmove', (e) => {
+        const t = e.touches[0];
+        if (!t) return;
+        const dx = t.clientX - lastMX, dy = t.clientY - lastMY;
+        if (Math.hypot(dx, dy) > 10) {
+          bolts.push(new LightningBolt(lastMX, lastMY, t.clientX, t.clientY, true));
+        }
+        lastMX = t.clientX; lastMY = t.clientY;
+      });
+      window.addEventListener('touchstart', (e) => {
+        const t = e.touches[0];
+        if (!t) return;
+        rings.push(new ShockwaveRing(t.clientX, t.clientY, '#60efff'));
+        lastMX = t.clientX; lastMY = t.clientY;
+      });
+
+      // ══════════════════════════════════════════
+      // MAIN ANIMATION LOOP
+      // ══════════════════════════════════════════
+      function animateThunder() {
         ctx.clearRect(0, 0, width, height);
 
-        for (let i = sparks.length - 1; i >= 0; i--) {
-          const s = sparks[i];
-          s.update();
-          if (s.dead) {
-            sparks.splice(i, 1);
-            continue;
-          }
-          s.draw();
+        // Plasma particles
+        for (const p of plasmas) { p.update(); p.draw(); }
+
+        // Shockwave rings
+        for (let i = rings.length - 1; i >= 0; i--) {
+          rings[i].update(); rings[i].draw();
+          if (rings[i].dead) rings.splice(i, 1);
         }
 
-        requestAnimationFrame(animateSparks);
+        // Electric arcs from logo
+        for (let i = arcs.length - 1; i >= 0; i--) {
+          arcs[i].update(); arcs[i].draw();
+          if (arcs[i].dead) arcs.splice(i, 1);
+        }
+
+        // Lightning bolts
+        for (let i = bolts.length - 1; i >= 0; i--) {
+          bolts[i].update(); bolts[i].draw();
+          if (bolts[i].dead) bolts.splice(i, 1);
+        }
+
+        requestAnimationFrame(animateThunder);
       }
 
-      animateSparks();
+      animateThunder();
 
       // ── 3D CARD TILT WITH SPECULAR LIGHT GLARE (+20% DEPTH BOOST) ──
       const cards = document.querySelectorAll('.event-item-card');
