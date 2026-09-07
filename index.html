@@ -1450,10 +1450,10 @@
         margin-left: 4px;
       }
 
-      /* Mobile Hero Section */
+      /* Mobile Hero Section — exact reference layout */
       .hero-section {
-        padding: 24px 16px 44px;
-        min-height: 82vh;
+        padding: 22px 16px 50px;
+        min-height: 88vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1464,66 +1464,106 @@
       }
       .hero-bg-stage {
         position: absolute;
-        inset: 0;
+        top: 0;
+        right: 0;
         width: 100%;
         height: 100%;
         background: url('images/hero-stage.jpg') center right / cover no-repeat;
-        opacity: 0.78;
-        filter: contrast(1.1) brightness(0.92);
+        opacity: 0.9;
+        filter: contrast(1.15) brightness(0.88);
         z-index: 1;
         mask-image: none !important;
         -webkit-mask-image: none !important;
       }
+      /* Strong dark-left gradient so left text is legible, right shows performer */
       .hero-bg-red-tint {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, rgba(5,5,7,0.92) 0%, rgba(5,5,7,0.65) 50%, rgba(5,5,7,0.2) 100%);
+        background: linear-gradient(
+          to right,
+          rgba(5,5,7,0.97) 0%,
+          rgba(5,5,7,0.90) 32%,
+          rgba(5,5,7,0.55) 58%,
+          rgba(5,5,7,0.05) 100%
+        );
         z-index: 2;
         mask-image: none !important;
         -webkit-mask-image: none !important;
       }
       .hero-slider-dots { display: none !important; }
+      /* Left content — max 60% wide, like reference */
       .hero-content {
         position: relative;
-        z-index: 3;
-        max-width: min(440px, 85%);
+        z-index: 4;
+        max-width: 60%;
       }
-      .hero-logo-mark {
-        margin-bottom: 6px;
-      }
+      .hero-logo-mark { margin-bottom: 8px; }
       .hero-logo-img {
-        width: 50px;
-        height: 50px;
+        width: 56px;
+        height: 56px;
+        filter: drop-shadow(0 0 14px rgba(255,30,39,0.9));
       }
       .hero-main-title {
-        font-size: clamp(2.4rem, 7.5vw, 3.4rem);
-        line-height: 0.98;
-        letter-spacing: 0.03em;
-        margin-bottom: 6px;
+        font-size: clamp(2.1rem, 7vw, 3rem);
+        line-height: 0.95;
+        letter-spacing: 0.02em;
+        margin-bottom: 8px;
       }
       .hero-tagline {
-        font-size: clamp(1.05rem, 3.2vw, 1.35rem);
+        font-size: clamp(0.88rem, 2.7vw, 1.15rem);
         margin-bottom: 14px;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.04em;
         transform: rotate(-1.5deg);
         display: inline-block;
+        white-space: nowrap;
       }
       .hero-desc {
-        font-size: 0.8rem;
-        line-height: 1.5;
+        font-size: 0.76rem;
+        line-height: 1.52;
         max-width: 100%;
         margin-bottom: 22px;
         color: #d1d5db;
       }
       .hero-content .btn-red-pill {
-        padding: 9px 20px;
-        font-size: 0.8rem;
+        padding: 10px 22px;
+        font-size: 0.82rem;
+        font-weight: 700;
       }
-      /* Hide duplicate HTML slogan overlay (already present on hero-stage.jpg) */
+      /* Performer silhouette — right side, prominent like reference */
+      .hero-silhouette-wrap {
+        position: absolute !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        z-index: 3 !important;
+        opacity: 0.85 !important;
+        pointer-events: none !important;
+      }
+      .hero-silhouette-wrap svg {
+        width: 185px !important;
+        height: auto !important;
+        filter: drop-shadow(0 0 20px rgba(255,30,39,0.5)) !important;
+      }
+      /* Think/Build/Create/Compete — right side, exactly like reference */
       .hero-side-slogans {
-        display: none !important;
+        display: flex !important;
+        position: absolute !important;
+        right: 10px !important;
+        bottom: 22% !important;
+        top: auto !important;
+        z-index: 5 !important;
+        flex-direction: column !important;
+        gap: 0px !important;
+        text-align: right !important;
+        font-family: 'Permanent Marker', cursive !important;
+        font-size: clamp(1.15rem, 3.5vw, 1.5rem) !important;
+        color: #f5b300 !important;
+        line-height: 1.22 !important;
+        transform: rotate(2deg) !important;
+        text-shadow: 0 2px 14px rgba(0,0,0,1), 0 0 28px rgba(0,0,0,0.95) !important;
+        pointer-events: none !important;
+        max-width: 150px !important;
       }
 
       /* Mobile Events Section Header */
