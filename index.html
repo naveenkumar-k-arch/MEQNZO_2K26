@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MEQNZO_2K26 | Where Ideas Meet Innovation</title>
+  <link rel="icon" type="image/png" href="images/me-logo.png">
+  <!-- Google Fonts: Oswald for bold headings, Montserrat for clean UI, Permanent Marker / Caveat for handwritten accents -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&family=Oswald:wght@500;700;800&family=Permanent+Marker&family=Caveat:wght@700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-black: #050507;
+      --card-bg: #0c0d12;
+      --red-primary: #ff1e27;
+      --red-glow: rgba(255, 30, 39, 0.45);
+      --red-dark: #b80c14;
+      --yellow-accent: #f5b300;
+      --yellow-tag: #ffc400;
+      --text-white: #ffffff;
+      --text-gray: #9ca3af;
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-red: rgba(255, 30, 39, 0.35);
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: var(--text-white);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ═════════════════════════════════════════════════════════════════
+       CAR DRIFT REAL VIDEO SPLASH SCREEN (3 SECONDS DURATION)
+       ═════════════════════════════════════════════════════════════════ */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 24px;
+      overflow: hidden;
+      transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), 
+                  transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    #splash.fade-out {
+      opacity: 0;
+      transform: scale(1.06);
+      pointer-events: none;
+    }
+
+    .splash-video-wrap {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .splash-video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85) contrast(1.15) saturate(1.2);
+    }
+
+    .splash-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(5, 5, 10, 0.3) 0%, rgba(5, 0, 0, 0.75) 60%, rgba(0,0,0,0.95) 100%);
+      z-index: 2;
+    }
+
+    .splash-scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.25) 0px, rgba(0,0,0,0.25) 1px, transparent 1px, transparent 3px);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .splash-top-hud {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 30, 39, 0.4);
+      padding-bottom: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hud-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      color: #fff;
+    }
+
+    .hud-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--red-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--red-primary);
+      animation: hudPulse 0.8s infinite alternate;
+    }
+
+    @keyframes hudPulse { from { opacity: 0.3; } to { opacity: 1; } }
+
+    .hud-timer {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--yellow-accent);
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 12px rgba(245, 179, 0, 0.8);
+    }
+
+    .skip-splash-btn {
+      background: rgba(255, 30, 39, 0.2);
+      border: 1px solid var(--red-primary);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .skip-splash-btn:hover {
+      background: var(--red-primary);
+      box-shadow: 0 0 20px var(--red-primary);
+    }
+
+    .splash-center-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .splash-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.35em;
+      color: var(--yellow-accent);
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255, 196, 0, 0.4);
+      padding: 5px 18px;
+      border-radius: 50px;
+      text-transform: uppercase;
+    }
+
+    .splash-big-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      font-weight: 800;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 10%, #ff3b44 65%, #a80007 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 35px rgba(255, 30, 39, 0.7));
+    }
+
+    .splash-sub-text {
+      font-family: 'Permanent Marker', cursive;
+      font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+      color: var(--yellow-accent);
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 15px rgba(0,0,0,0.9);
+    }
+
+    .splash-bottom-bar {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .splash-bar-labels {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: #ff8888;
+    }
+
+    .splash-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 30, 39, 0.5);
+    }
+
+    .splash-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff1e27, #ff9500, #ffeb3b);
+      box-shadow: 0 0 15px rgba(255, 30, 39, 0.9);
+      animation: fillTimer 3s linear forwards;
+    }
+
+    @keyframes fillTimer { 0% { width: 0%; } 100% { width: 100%; } }
+
+    .splash-hint {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.65);
+      text-transform: uppercase;
+    }
+
+
+    /* ═════════════════════════════════════════════════════════════════
+       MAIN FRONT-END (EXACT REPLICA OF MEQNZO_2K26 DESIGN)
+       ═════════════════════════════════════════════════════════════════ */
+    #main-app {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      position: relative;
+      background: var(--bg-black);
+    }
+
+    #main-app.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Red Scratch Marks SVG and Background Lights */
+    .bg-slash-effects {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 900px;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* Navbar with Fiery Underglow */
+    header.navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5, 5, 7, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 60, 20, 0.35);
+      box-shadow: 0 4px 25px rgba(255, 40, 10, 0.22);
+      padding: 16px 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header.navbar::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ff1e27 20%, #ff9500 48%, #ffea00 52%, #ff1e27 80%, transparent 100%);
+      background-size: 200% 100%;
+      animation: navbarFireGlow 4s linear infinite;
+      box-shadow: 0 0 15px #ff4400, 0 0 28px rgba(255, 80, 0, 0.4);
+      pointer-events: none;
+    }
+
+    @keyframes navbarFireGlow {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .brand-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #fff;
+    }
+
+    .brand-text span {
+      color: var(--red-primary);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--text-gray);
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-menu a:hover {
+      color: #fff;
+    }
+
+    .nav-menu a.active {
+      color: var(--red-primary);
+    }
+
+    .nav-menu a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red-primary);
+      border-radius: 2px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .search-btn {
+      background: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .search-btn:hover { opacity: 1; }
+
+    .btn-red-pill {
+      background: var(--red-primary);
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 9px 24px;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(255, 30, 39, 0.45);
+      transition: all 0.25s ease;
+    }
+
+    .btn-red-pill:hover {
+      background: #ff333c;
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 30px rgba(255, 30, 39, 0.75), 0 0 15px rgba(255, 140, 0, 0.4);
+    }
+
+    /* ═════════════════════════════════════════════════════════════════
+       HERO SECTION
+       ═════════════════════════════════════════════════════════════════ */
+    .hero-section {
+      position: relative;
+      min-height: 86vh;
+      display: flex;
+      align-items: center;
+      padding: 40px 54px 80px;
+      overflow: hidden;
+      background: radial-gradient(circle at 75% 45%, rgba(180, 15, 20, 0.35) 0%, rgba(5, 5, 7, 0.95) 70%);
+    }
+
+    /* Hero Background Image: Exact Auditorium Concert Stage from reference */
+    .hero-bg-stage {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 60%;
+      background: url('images/hero-stage.jpg') center right / cover no-repeat;
+      filter: contrast(1.1) brightness(0.95);
+      z-index: 1;
+      mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+    }
+
+    /* Red tint overlay to complement hero stage */
+    .hero-bg-red-tint {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 60%;
+      background: linear-gradient(135deg, rgba(255, 20, 30, 0.25) 0%, rgba(80, 5, 10, 0.5) 100%);
+      mix-blend-mode: screen;
+      z-index: 2;
+      pointer-events: none;
+      mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+    }
+
+    /* Silhouette Performer on Stage with Red Hoodie ME logo */
+    .hero-silhouette-wrap {
+      position: absolute;
+      right: 18%;
+      bottom: 60px;
+      z-index: 3;
+      pointer-events: none;
+      text-align: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 620px;
+    }
+
+    /* Left Slider Dots */
+    .hero-slider-dots {
+      position: absolute;
+      left: 20px;
+      top: 45%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .h-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+    }
+    .h-dot.active-red { background: var(--red-primary); height: 16px; border-radius: 10px; }
+    .h-dot.active-yellow { background: var(--yellow-accent); }
+
+    /* Logo Brand in Hero */
+    .hero-logo-mark {
+      margin-bottom: 8px;
+    }
+
+    .hero-main-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(3.6rem, 6.5vw, 5.8rem);
+      font-weight: 800;
+      font-style: italic;
+      line-height: 0.95;
+      letter-spacing: 0.05em;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-shadow: 0 1px 0 #b30009, 0 2px 0 #8a0006, 0 3px 0 #5c0004, 0 6px 22px rgba(0,0,0,0.9), 0 0 40px rgba(255,30,39,0.35);
+      transform: perspective(800px) rotateX(2deg);
+      transform-origin: left center;
+    }
+
+    .hero-main-title span {
+      color: var(--red-primary);
+      text-shadow: 0 0 15px #ff1e27, 0 0 32px #ff6600, 0 0 50px rgba(255, 100, 0, 0.6);
+    }
+
+    .hero-tagline {
+      font-family: 'Permanent Marker', cursive;
+      font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+      color: var(--yellow-accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      transform: rotate(-1.5deg) translateZ(18px);
+      display: inline-block;
+      text-shadow: 0 2px 0 #b37e00, 0 4px 16px rgba(0,0,0,0.9), 0 0 28px rgba(245, 179, 0, 0.5);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #d1d5db;
+      margin-bottom: 32px;
+      max-width: 520px;
+      font-weight: 400;
+    }
+
+    /* Right Handwritten Text: Think / Build / Create / Compete */
+    .hero-side-slogans {
+      position: absolute;
+      right: 36px;
+      top: 30%;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: right;
+      font-family: 'Permanent Marker', cursive;
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      color: var(--yellow-accent);
+      line-height: 1.15;
+      transform: rotate(2deg);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    /* ═════════════════════════════════════════════════════════════════
+       OUR EVENTS SECTION
+       ═════════════════════════════════════════════════════════════════ */
+    .events-section {
+      padding: 60px 54px 90px;
+      position: relative;
+      z-index: 10;
+      background: #06070a;
+    }
+
+    .events-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+    }
+
+    .events-header-left .section-sub-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      color: var(--yellow-tag);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .section-sub-bar::before {
+      content: '';
+      width: 24px;
+      height: 3px;
+      background: var(--yellow-tag);
+      border-radius: 2px;
+    }
+
+    .events-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .events-title span {
+      color: var(--red-primary);
+    }
+
+    .events-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-gray);
+      font-weight: 400;
+    }
+
+    .view-all-link {
+      color: var(--yellow-accent);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s ease, color 0.2s ease;
+    }
+
+    .view-all-link:hover {
+      color: #fff;
+      gap: 10px;
+    }
+
+    /* 5 Event Cards Horizontal Grid */
+    .events-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+    }
+
+    .event-item-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .event-item-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 30, 39, 0.5);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 30, 39, 0.2);
+    }
+
+    .card-top-header {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--yellow-tag);
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .card-top-header svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .card-image-wrap {
+      width: 100%;
+      height: 120px;
+      overflow: hidden;
+      position: relative;
+      background: #111;
+    }
+
+    .card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85) contrast(1.1);
+      transition: transform 0.4s ease;
+    }
+
+    .event-item-card:hover .card-image-wrap img {
+      transform: scale(1.08);
+    }
+
+    .card-image-tint {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 30, 39, 0.15) 0%, rgba(10, 10, 15, 0.7) 100%);
+    }
+
+    .card-body {
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-event-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+
+    .card-event-desc {
+      font-size: 0.76rem;
+      color: #9ca3af;
+      line-height: 1.45;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .card-schedule {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 16px;
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .sched-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sched-row svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--red-primary);
+      flex-shrink: 0;
+    }
+
+    .btn-card-explore {
+      background: transparent;
+      border: 1px solid rgba(245, 179, 0, 0.55);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 7px 12px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-card-explore:hover {
+      background: rgba(245, 179, 0, 0.15);
+      border-color: var(--yellow-accent);
+      color: var(--yellow-accent);
+    }
+
+    /* ═════════════════════════════════════════════════════════════════
+       STATS COUNTER RIBBON
+       ═════════════════════════════════════════════════════════════════ */
+    .stats-ribbon {
+      background: #07080c;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 36px 54px;
+      position: relative;
+    }
+
+    .stats-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .stat-entry {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s ease, background-color 0.28s ease;
+      cursor: default;
+    }
+
+    .stat-entry:hover {
+      transform: perspective(600px) translateY(-5px) scale(1.05);
+      background: rgba(255, 30, 39, 0.06);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 30, 39, 0.25);
+    }
+
+    .stat-icon-wrap {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 30, 39, 0.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red-primary);
+      flex-shrink: 0;
+    }
+
+    .stat-icon-wrap svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .stat-info .stat-digit {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-info .stat-tag {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    /* ═════════════════════════════════════════════════════════════════
+       FEATURED: BE A PART OF MEQNZO_2K26
+       ═════════════════════════════════════════════════════════════════ */
+    .featured-section {
+      padding: 90px 54px 100px;
+      background: #050608;
+      position: relative;
+    }
+
+    .featured-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    /* Left Stage Concert Graphic with Crowd and Red Lighting */
+    .featured-visual {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 30, 39, 0.35);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 30, 39, 0.25);
+      aspect-ratio: 16 / 10;
+      background: #111;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+    }
+
+    .featured-visual:hover {
+      transform: perspective(1000px) rotateY(-3.5deg) rotateX(2.5deg) scale(1.03);
+      box-shadow: 0 32px 65px rgba(0, 0, 0, 0.95), 0 0 45px rgba(255, 30, 39, 0.35);
+    }
+
+    .featured-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.2) brightness(0.8);
+    }
+
+    .featured-stage-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(5,5,7,0.85) 0%, rgba(255,20,30,0.2) 60%, transparent 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .featured-stage-logo {
+      text-align: center;
+      filter: drop-shadow(0 0 25px rgba(255, 30, 39, 0.9));
+    }
+
+    /* Right Content */
+    .featured-text-col .featured-sub-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      color: var(--yellow-tag);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .featured-sub-bar::before {
+      content: '';
+      width: 22px;
+      height: 3px;
+      background: var(--yellow-tag);
+      border-radius: 2px;
+    }
+
+    .featured-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .featured-title span {
+      color: var(--red-primary);
+      display: block;
+    }
+
+    .featured-desc {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #9ca3af;
+      margin-bottom: 28px;
+    }
+
+    .featured-features-list {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .feat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feat-icon {
+      color: var(--yellow-accent);
+      flex-shrink: 0;
+    }
+
+    .feat-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .feat-label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #d1d5db;
+      line-height: 1.35;
+    }
+
+    /* ═════════════════════════════════════════════════════════════════
+       FOOTER (CLEAN & SUBTLE, NO HEAVY 3D/GLOW)
+       ═════════════════════════════════════════════════════════════════ */
+    footer.main-footer {
+      position: relative;
+      z-index: 25;
+      background: #040508;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 40px 54px 30px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .footer-brand-col {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-slogan {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: var(--yellow-accent);
+      text-transform: uppercase;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-gray);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: #fff; }
+
+    .footer-socials {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-btn {
+      color: #9ca3af;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    .social-btn:hover { color: var(--red-primary); }
+    .social-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .footer-bottom {
+      padding-top: 24px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    /* Official Logo Image Styles with 3D Fire Aura */
+    .nav-logo-img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(255, 30, 39, 0.75));
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-logo-img:hover {
+      transform: scale(1.15) rotate(-5deg);
+    }
+
+    /* ═════════════════════════════════════════════════════════════════
+       TOP 3D FIRE FLAME EFFECTS (HERO LOGO & NAVBAR)
+       ═════════════════════════════════════════════════════════════════ */
+    .hero-fire-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 140px;
+      height: 140px;
+      margin-bottom: 6px;
+      transform-style: preserve-3d;
+      perspective: 800px;
+    }
+
+    .flame-layer {
+      position: absolute;
+      pointer-events: none;
+      border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+      transform-origin: 50% 90%;
+      mix-blend-mode: screen;
+      filter: blur(6px);
+    }
+
+    /* Back red/crimson roaring flame body */
+    .flame-layer-back {
+      width: 145px;
+      height: 170px;
+      bottom: 6px;
+      background: radial-gradient(ellipse at 50% 85%, rgba(255, 30, 39, 0.95) 0%, rgba(255, 60, 0, 0.8) 45%, rgba(180, 0, 0, 0.25) 75%, transparent 100%);
+      animation: flameTurbulence 1.8s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    /* Middle vibrant fiery orange flame */
+    .flame-layer-mid {
+      width: 120px;
+      height: 145px;
+      bottom: 12px;
+      background: radial-gradient(ellipse at 50% 80%, rgba(255, 140, 0, 0.95) 0%, rgba(255, 70, 0, 0.8) 55%, transparent 80%);
+      animation: flameWaver 1.3s ease-in-out infinite alternate-reverse;
+      filter: blur(4px);
+      z-index: 2;
+    }
+
+    /* Front bright gold/yellow blazing combustion tongues */
+    .flame-layer-front {
+      width: 90px;
+      height: 115px;
+      bottom: 16px;
+      background: radial-gradient(ellipse at 50% 75%, rgba(255, 220, 0, 0.95) 0%, rgba(255, 130, 0, 0.75) 60%, transparent 85%);
+      animation: flameTongueFlicker 0.95s ease-in-out infinite alternate;
+      filter: blur(3px);
+      z-index: 3;
+    }
+
+    /* Core white-hot ignition kernel */
+    .flame-layer-core {
+      width: 60px;
+      height: 75px;
+      bottom: 22px;
+      background: radial-gradient(ellipse at 50% 70%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 240, 150, 0.85) 40%, rgba(255, 140, 0, 0.5) 75%, transparent 90%);
+      animation: flameCorePulse 0.7s ease-in-out infinite alternate;
+      filter: blur(2px);
+      z-index: 4;
+    }
+
+    @keyframes flameTurbulence {
+      0% {
+        transform: scaleY(0.98) scaleX(1) rotate(-4deg) skewX(-2deg);
+        border-radius: 46% 54% 38% 42% / 58% 62% 38% 42%;
+      }
+      50% {
+        transform: scaleY(1.18) scaleX(0.9) rotate(3deg) skewX(2deg);
+        border-radius: 54% 46% 42% 38% / 65% 55% 45% 35%;
+      }
+      100% {
+        transform: scaleY(1.05) scaleX(1.03) rotate(-3deg) skewX(-1deg);
+        border-radius: 42% 58% 36% 44% / 55% 65% 35% 45%;
+      }
+    }
+
+    @keyframes flameWaver {
+      0% {
+        transform: scale(0.95) translateY(2px) rotate(3deg);
+      }
+      100% {
+        transform: scale(1.15) translateY(-9px) rotate(-4deg);
+      }
+    }
+
+    @keyframes flameTongueFlicker {
+      0% {
+        transform: scaleY(0.92) scaleX(1.04) translateY(0) rotate(-2deg);
+        opacity: 0.85;
+      }
+      100% {
+        transform: scaleY(1.22) scaleX(0.88) translateY(-8px) rotate(3deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes flameCorePulse {
+      0% {
+        transform: scale(0.9) translateY(0);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1.15) translateY(-5px);
+        opacity: 1;
+      }
+    }
+
+    /* Dynamic Rising Fire Sparks around Logo */
+    .logo-sparks-wrap {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .l-spark {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 6px #ffcc00, 0 0 14px #ff4400;
+      opacity: 0;
+      animation: riseSpark 2s ease-in-out infinite;
+    }
+
+    .l-spark.s1 { left: 24%; bottom: 22px; animation-delay: 0.1s; animation-duration: 1.8s; }
+    .l-spark.s2 { left: 44%; bottom: 28px; animation-delay: 0.5s; animation-duration: 2.2s; }
+    .l-spark.s3 { left: 66%; bottom: 22px; animation-delay: 0.9s; animation-duration: 1.7s; }
+    .l-spark.s4 { left: 34%; bottom: 32px; animation-delay: 1.3s; animation-duration: 2.0s; }
+    .l-spark.s5 { left: 56%; bottom: 30px; animation-delay: 1.6s; animation-duration: 1.9s; }
+    .l-spark.s6 { left: 76%; bottom: 24px; animation-delay: 0.7s; animation-duration: 2.1s; }
+
+    @keyframes riseSpark {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) scale(0.5);
+      }
+      25% {
+        opacity: 1;
+        transform: translate3d(2px, -24px, 10px) scale(1.25);
+      }
+      80% {
+        opacity: 0.85;
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(14px, -92px, 20px) scale(0.2);
+      }
+    }
+
+    .hero-logo-img {
+      position: relative;
+      z-index: 5;
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 14px #ff1e27) drop-shadow(0 0 32px #ff7700);
+      animation: fireFloat 2.6s ease-in-out infinite alternate, logoFireGlow 1.6s ease-in-out infinite alternate;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes fireFloat {
+      0% { transform: translateY(0px) rotate(-1.5deg) scale(1); }
+      100% { transform: translateY(-8px) rotate(2deg) scale(1.04); }
+    }
+
+    @keyframes logoFireGlow {
+      0% {
+        filter: drop-shadow(0 0 12px #ff1e27) drop-shadow(0 0 28px #ff5100) drop-shadow(0 0 50px rgba(255, 140, 0, 0.6));
+      }
+      50% {
+        filter: drop-shadow(0 0 22px #ff2a00) drop-shadow(0 0 45px #ff8000) drop-shadow(0 0 75px rgba(255, 200, 0, 0.9));
+      }
+      100% {
+        filter: drop-shadow(0 0 15px #ff0015) drop-shadow(0 0 35px #ff3700) drop-shadow(0 0 58px rgba(255, 100, 0, 0.7));
+      }
+    }
+
+    .splash-logo-img {
+      width: 76px;
+      height: 76px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 22px rgba(255, 30, 39, 0.95));
+      margin-bottom: 8px;
+      animation: logoPulse 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoPulse {
+      0% { transform: scale(0.96); filter: drop-shadow(0 0 14px rgba(255, 30, 39, 0.8)); }
+      100% { transform: scale(1.04); filter: drop-shadow(0 0 28px rgba(255, 30, 39, 1)); }
+    }
+
+    .featured-stage-logo-img {
+      width: 95px;
+      height: 95px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 25px rgba(255, 30, 39, 1));
+      animation: logoPulse 2s ease-in-out infinite alternate;
+    }
+
+    .footer-logo-img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      filter: none;
+      opacity: 0.92;
+    }
+
+    #fireCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 25;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 97%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 97%);
+    }
+
+    .events-cards-grid {
+      perspective: 1200px;
+    }
+
+    .event-item-card {
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out, box-shadow 0.25s ease-out, border-color 0.25s ease-out;
+      will-change: transform;
+      position: relative;
+    }
+
+    .event-item-card .card-image-wrap {
+      transform: translateZ(32px);
+      transition: transform 0.25s ease-out;
+    }
+
+    .event-item-card .card-body {
+      transform: translateZ(42px);
+    }
+
+    .event-item-card .btn-card-explore {
+      transform: translateZ(54px);
+      transition: all 0.2s ease;
+    }
+
+    .event-item-card:hover {
+      box-shadow: 0 26px 55px rgba(0, 0, 0, 0.9), 
+                  0 0 45px rgba(255, 30, 39, 0.45),
+                  0 0 22px rgba(255, 140, 0, 0.32);
+      border-color: rgba(255, 70, 45, 0.85);
+    }
+
+    /* 3D Specular Light Glare */
+    .card-glare {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: 8px;
+      background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 150, 60, 0.48) 0%, rgba(255, 30, 39, 0.16) 40%, transparent 72%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 20;
+      mix-blend-mode: screen;
+    }
+
+    .event-item-card:hover .card-glare {
+      opacity: 1;
+    }
+
+    /* Fire Flame Text Shimmer */
+    .events-title span {
+      display: inline-block;
+      color: #ff2200;
+      text-shadow: 0 0 10px #ff2a00, 0 0 22px #ff6600, 0 0 40px #ffbb00;
+      animation: fireTextShimmer 1.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes fireTextShimmer {
+      0% {
+        text-shadow: 0 0 10px #ff2a00, 0 0 20px #ff6600, 0 0 35px #ffaa00;
+        transform: scale(1);
+      }
+      100% {
+        text-shadow: 0 0 18px #ff0000, 0 0 32px #ff4400, 0 0 55px #ffea00;
+        transform: scale(1.05);
+      }
+    }
+
+    /* Button Flame Border Glow */
+    .btn-red-pill {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-red-pill::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
+      opacity: 0;
+      transform: scale(0.5);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .btn-red-pill:hover::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1200px) {
+      .events-cards-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      header.navbar { padding: 14px 24px; }
+      .nav-menu { display: none; }
+      .hero-section { padding: 40px 24px 60px; }
+      .hero-bg-stage { width: 100%; opacity: 0.35; }
+      .hero-side-slogans { display: none; }
+      .events-section { padding: 50px 24px; }
+      .events-cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-container { grid-template-columns: repeat(2, 1fr); }
+      .featured-grid { grid-template-columns: 1fr; }
+      .featured-features-list { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      header.navbar { padding: 12px 16px; }
+      .brand-text { font-size: 1.2rem; }
+      .nav-right { gap: 10px; }
+      .btn-red-pill { padding: 8px 16px; font-size: 0.78rem; }
+      .hero-section { padding: 32px 18px 50px; }
+      .hero-main-title { font-size: 2.9rem; }
+      .hero-tagline { font-size: 1.25rem; }
+      .events-section { padding: 40px 18px; }
+      .events-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .events-cards-grid { grid-template-columns: 1fr; gap: 18px; }
+      .stats-ribbon { padding: 26px 18px; }
+      .stats-container { grid-template-columns: 1fr; gap: 20px; }
+      .featured-section { padding: 50px 18px; }
+      footer.main-footer { padding: 30px 18px 24px; }
+      .footer-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
+      .splash-top-hud { padding-bottom: 8px; font-size: 0.75rem; }
+      .hud-title { font-size: 0.7rem; letter-spacing: 0.12em; }
+      .hud-timer { font-size: 1rem; }
+      .splash-big-title { font-size: 2.7rem; }
+      .splash-sub-text { font-size: 1.05rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═════════════════════════════════════════════════════════════════
+       1. REAL CAR DRIFT VIDEO SPLASH SCREEN (PLAYS FOR 3 SECONDS)
+       ═════════════════════════════════════════════════════════════════ -->
+  <div id="splash">
+    
+    <!-- Real Video Background -->
+    <div class="splash-video-wrap">
+      <video id="carDriftVideo" autoplay muted loop playsinline preload="auto">
+        <source src="drift.webm" type="video/webm">
+        <source src="fpv-drift.webm" type="video/webm">
+        <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/8/80/Drifting.webm/Drifting.webm.480p.vp9.webm" type="video/webm">
+      </video>
+      <div class="splash-video-overlay"></div>
+      <div class="splash-scanlines"></div>
+    </div>
+
+    <!-- Splash Top HUD -->
+    <div class="splash-top-hud">
+      <div class="hud-title">
+        <span class="hud-dot"></span>
+        <span>MEQNZO 2K26 // TRACK DRIFT INTRO</span>
+      </div>
+      <div class="hud-timer" id="splashTimer">03.00s</div>
+      <button class="skip-splash-btn" onclick="removeSplash()">SKIP INTRO &rarr;</button>
+    </div>
+
+    <!-- Splash Center Branding -->
+    <div class="splash-center-content">
+      <img src="images/me-logo.png" alt="MEQNZO Logo" class="splash-logo-img">
+      <div class="splash-tag">&#9889; DRIFT IGNITION &#9889;</div>
+      <h1 class="splash-big-title">MEQNZO 2K26</h1>
+      <div class="splash-sub-text">WHERE IDEAS MEET INNOVATION</div>
+    </div>
+
+    <!-- Splash Bottom Progress Bar -->
+    <div class="splash-bottom-bar">
+      <div class="splash-bar-labels">
+        <span>NITRO CHARGE</span>
+        <span id="splashPct">0%</span>
+      </div>
+      <div class="splash-track">
+        <div class="splash-fill" id="splashFill"></div>
+      </div>
+      <div class="splash-hint">Opening website in 3 seconds...</div>
+    </div>
+
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════
+       2. EXACT MEQNZO_2K26 FRONT-END (REVEALED AFTER 3 SECONDS)
+       ═════════════════════════════════════════════════════════════════ -->
+  <div id="main-app">
+
+    <!-- Interactive 3D Fire & Ember Particle Canvas -->
+    <canvas id="fireCanvas"></canvas>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+      <a href="#" class="brand-logo">
+        <!-- Exact Official ME Logo -->
+        <img src="images/me-logo.png" alt="MEQNZO Logo" class="nav-logo-img">
+        <span class="brand-text">MEQNZO_<span>2K26</span></span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="https://www.instagram.com/meqnzo_2k26?stkn=eXd6czdieXB6N201" target="_blank" rel="noopener noreferrer" class="search-btn" title="Follow @meqnzo_2k26 on Instagram" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+        <button class="search-btn" title="Search" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <a href="#events" class="btn-red-pill">Register Now &rarr;</a>
+      </div>
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+      
+      <!-- Side Dots Slider Indicator -->
+      <div class="hero-slider-dots">
+        <div class="h-dot active-red"></div>
+        <div class="h-dot active-yellow"></div>
+        <div class="h-dot"></div>
+      </div>
+
+      <!-- Hero Content Left -->
+      <div class="hero-content">
+        <!-- Official Logo Mark Above Title with Active 3D Fire Flames -->
+        <div class="hero-logo-mark">
+          <div class="hero-fire-wrap" id="heroFireWrap">
+            <!-- 3D Layered Flame Tongues & Fire Heat Aura -->
+            <div class="flame-layer flame-layer-back"></div>
+            <div class="flame-layer flame-layer-mid"></div>
+            <div class="flame-layer flame-layer-front"></div>
+            <div class="flame-layer flame-layer-core"></div>
+            <!-- Animated Rising Flame Sparks from Logo -->
+            <div class="logo-sparks-wrap">
+              <span class="l-spark s1"></span>
+              <span class="l-spark s2"></span>
+              <span class="l-spark s3"></span>
+              <span class="l-spark s4"></span>
+              <span class="l-spark s5"></span>
+              <span class="l-spark s6"></span>
+            </div>
+            <img src="images/me-logo.png" alt="MEQNZO Logo" class="hero-logo-img" id="heroLogoImg">
+          </div>
+        </div>
+
+        <h1 class="hero-main-title">MEQNZO_<span>2K26</span></h1>
+        
+        <div class="hero-tagline">WHERE IDEAS MEET INNOVATION</div>
+
+        <p class="hero-desc">
+          A celebration of ideas, talent and creativity. Meqnzo_2K26 brings together minds, skills and passion through exciting events, challenges and competitions.
+        </p>
+
+        <a href="#events" class="btn-red-pill" style="font-size: 0.95rem; padding: 12px 30px;">
+          Explore Events &rarr;
+        </a>
+      </div>
+
+      <!-- Hero Background Stage Visual (Auditorium with Red Beams & Audience) -->
+      <div class="hero-bg-stage"></div>
+      <div class="hero-bg-red-tint"></div>
+
+      <!-- Hero Silhouette Performer with Red ME Logo on hoodie -->
+      <div class="hero-silhouette-wrap">
+        <svg width="240" height="340" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Person head/hoodie -->
+          <path d="M80 80 Q100 50 120 80 Q130 110 120 130 Q100 145 80 130 Q70 110 80 80 Z" fill="#08080a"/>
+          <!-- Shoulders & back -->
+          <path d="M50 140 Q100 120 150 140 L165 290 L35 290 Z" fill="#0c0d12"/>
+          <!-- Official ME Logo on back of hoodie -->
+          <image href="images/me-logo.png" x="78" y="165" width="44" height="44" />
+        </svg>
+      </div>
+
+      <!-- Right Handwritten Slogans -->
+      <div class="hero-side-slogans">
+        <span>Think</span>
+        <span>Build</span>
+        <span>Create</span>
+        <span>Compete</span>
+      </div>
+
+    </section>
+
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         OUR EVENTS SECTION (5 EXCITING EVENTS)
+         ═════════════════════════════════════════════════════════════════ -->
+    <section class="events-section" id="events">
+      
+      <div class="events-header">
+        <div class="events-header-left">
+          <div class="section-sub-bar">OUR EVENTS</div>
+          <h2 class="events-title"><span>5</span> Exciting Events</h2>
+          <p class="events-subtitle">Showcase your skills, challenge your limits and be a part of something bigger.</p>
+        </div>
+        <a href="#events" class="view-all-link">View All Events &rarr;</a>
+      </div>
+
+      <!-- 5 Event Cards Row -->
+      <div class="events-cards-grid">
+        
+        <!-- Event 1: PAPER PRESENTATION -->
+        <div class="event-item-card">
+          <div class="card-glare"></div>
+          <div class="card-top-header">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <span>ACADEMIC</span>
+          </div>
+          <div class="card-image-wrap">
+            <img src="images/event-paper-presentation.jpg" alt="Paper Presentation">
+            <div class="card-image-tint"></div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-event-title">PAPER PRESENTATION</h3>
+            <p class="card-event-desc">Present your ideas, share your insights and make your voice heard.</p>
+            <div class="card-schedule">
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                <span>Apr 25, 2026</span>
+              </div>
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span>09:00 AM - 12:00 PM</span>
+              </div>
+            </div>
+            <a href="#register" class="btn-card-explore">Explore Event &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Event 2: MODEL MASTERS -->
+        <div class="event-item-card">
+          <div class="card-glare"></div>
+          <div class="card-top-header">
+            <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+            <span>TECH &amp; INNOVATION</span>
+          </div>
+          <div class="card-image-wrap">
+            <img src="images/event-model-masters.jpg" alt="Model Masters">
+            <div class="card-image-tint"></div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-event-title">MODEL MASTERS</h3>
+            <p class="card-event-desc">Design. Build. Innovate. Turn your creativity into working models.</p>
+            <div class="card-schedule">
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                <span>Apr 26, 2026</span>
+              </div>
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span>10:00 AM - 01:00 PM</span>
+              </div>
+            </div>
+            <a href="#register" class="btn-card-explore">Explore Event &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Event 3: TECHGEEZZ -->
+        <div class="event-item-card">
+          <div class="card-glare"></div>
+          <div class="card-top-header">
+            <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+            <span>TECH &amp; CODING</span>
+          </div>
+          <div class="card-image-wrap">
+            <img src="images/event-techgeezz.jpg" alt="Techgeezz">
+            <div class="card-image-tint"></div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-event-title">TECHGEEZZ</h3>
+            <p class="card-event-desc">Think. Code. Solve. Take on real-world problems with your tech skills.</p>
+            <div class="card-schedule">
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                <span>Apr 27, 2026</span>
+              </div>
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span>09:00 AM - 12:00 PM</span>
+              </div>
+            </div>
+            <a href="#register" class="btn-card-explore">Explore Event &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Event 4: KURAL 712 -->
+        <div class="event-item-card">
+          <div class="card-glare"></div>
+          <div class="card-top-header">
+            <svg viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2s-2-.9-2-2V4c0-1.1.9-2 2-2zm6 8c0 3.08-2.3 5.62-5.25 5.94V19h2.25v2h-6v-2h2.25v-3.06C8.3 15.62 6 13.08 6 10H4c0 4.08 3.05 7.44 7 7.93V21h2v-3.07c3.95-.49 7-3.85 7-7.93h-2z"/></svg>
+            <span>LITERARY</span>
+          </div>
+          <div class="card-image-wrap">
+            <img src="images/event-kural-712.jpg" alt="Kural 712">
+            <div class="card-image-tint"></div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-event-title">KURAL 712</h3>
+            <p class="card-event-desc">Words have power. Express, inspire and make an impact.</p>
+            <div class="card-schedule">
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                <span>Apr 28, 2026</span>
+              </div>
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span>10:00 AM - 01:00 PM</span>
+              </div>
+            </div>
+            <a href="#register" class="btn-card-explore">Explore Event &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Event 5: MECH ODU VILAYADU -->
+        <div class="event-item-card">
+          <div class="card-glare"></div>
+          <div class="card-top-header">
+            <svg viewBox="0 0 24 24"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7.1 1.5z"/></svg>
+            <span>NON-TECHNICAL</span>
+          </div>
+          <div class="card-image-wrap">
+            <img src="images/event-mech-odu-vilayadu.jpg" alt="Mech Odu Vilayadu">
+            <div class="card-image-tint"></div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-event-title">MECH ODU VILAYADU</h3>
+            <p class="card-event-desc">Speed, strategy and teamwork. Show what you're made of.</p>
+            <div class="card-schedule">
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                <span>Apr 29, 2026</span>
+              </div>
+              <div class="sched-row">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span>03:00 PM - 06:00 PM</span>
+              </div>
+            </div>
+            <a href="#register" class="btn-card-explore">Explore Event &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         STATS COUNTER RIBBON
+         ═════════════════════════════════════════════════════════════════ -->
+    <div class="stats-ribbon">
+      <div class="stats-container">
+        
+        <div class="stat-entry">
+          <div class="stat-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-digit">500+</div>
+            <div class="stat-tag">Participants</div>
+          </div>
+        </div>
+
+        <div class="stat-entry">
+          <div class="stat-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H7v2h10v-2h-4v-3.1c1.83-.43 3.24-1.89 3.61-3.72C19.08 11.83 21 9.75 21 7.2V7c0-1.1-.9-2-2-2zM5 7.2c0-1.2.99-2.2 2.2-2.2H8v3.1c-1.74-.24-3-1.63-3-2.9zM19 7.2c0 1.27-1.26 2.66-3 2.9V5h.8c1.21 0 2.2 1 2.2 2.2z"/></svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-digit">5</div>
+            <div class="stat-tag">Exciting Events</div>
+          </div>
+        </div>
+
+        <div class="stat-entry">
+          <div class="stat-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-digit">3</div>
+            <div class="stat-tag">Days of Fun</div>
+          </div>
+        </div>
+
+        <div class="stat-entry">
+          <div class="stat-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-digit">1</div>
+            <div class="stat-tag">Unforgettable Fest</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         FEATURED SECTION: BE A PART OF MEQNZO_2K26
+         ═════════════════════════════════════════════════════════════════ -->
+    <section class="featured-section" id="about">
+      <div class="featured-grid">
+        
+        <!-- Left Concert Live Visual with Scratch Logo -->
+        <div class="featured-visual">
+          <img src="images/featured-stage.jpg" alt="Stage Show">
+          <div class="featured-stage-overlay">
+            <div class="featured-stage-logo">
+              <img src="images/me-logo.png" alt="MEQNZO" class="featured-stage-logo-img">
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Content Block -->
+        <div class="featured-text-col">
+          <div class="featured-sub-bar">FEATURED</div>
+          <h2 class="featured-title">
+            Be a Part of
+            <span>Meqnzo_2K26</span>
+          </h2>
+          <p class="featured-desc">
+            Experience innovation, creativity and competition like never before. Join us for an unforgettable journey of learning, networking and fun!
+          </p>
+
+          <a href="#events" class="btn-red-pill" style="font-size: 0.92rem; padding: 11px 26px;">
+            Register Now &rarr;
+          </a>
+
+          <!-- 3 Benefits Features -->
+          <div class="featured-features-list">
+            <div class="feat-item">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H7v2h10v-2h-4v-3.1c1.83-.43 3.24-1.89 3.61-3.72C19.08 11.83 21 9.75 21 7.2V7c0-1.1-.9-2-2-2z"/></svg>
+              </div>
+              <span class="feat-label">Win Exciting Prizes</span>
+            </div>
+
+            <div class="feat-item">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1z"/></svg>
+              </div>
+              <span class="feat-label">Get Recognized &amp; Build Your Profile</span>
+            </div>
+
+            <div class="feat-item">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              </div>
+              <span class="feat-label">Connect With Like-Minded People</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         FOOTER
+         ═════════════════════════════════════════════════════════════════ -->
+    <footer class="main-footer" id="contact">
+      <div class="footer-top">
+        
+        <div class="footer-brand-col">
+          <a href="#" class="brand-logo">
+            <img src="images/me-logo.png" alt="MEQNZO" class="footer-logo-img">
+            <span class="brand-text">MEQNZO_<span>2K26</span></span>
+          </a>
+          <span class="footer-slogan">THINK &nbsp;/&nbsp; BUILD &nbsp;/&nbsp; CREATE &nbsp;/&nbsp; COMPETE</span>
+        </div>
+
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="footer-socials">
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/meqnzo_2k26?stkn=eXd6czdieXB6N201" target="_blank" rel="noopener noreferrer" class="social-btn" title="Follow @meqnzo_2k26 on Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <!-- Twitter / X -->
+          <a href="#" class="social-btn" title="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <!-- YouTube -->
+          <a href="#" class="social-btn" title="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="#" class="social-btn" title="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Meqnzo_2K26. All rights reserved.</p>
+      </div>
+    </footer>
+
+  </div>
+
+
+  <!-- ═════════════════════════════════════════════════════════════════
+       JAVASCRIPT: 3-SECOND TIMER & REMOVE SPLASH
+       ═════════════════════════════════════════════════════════════════ -->
+  <script>
+    const DURATION = 3000; // Exact 3 Seconds
+    let startTime = null;
+    let isRemoved = false;
+
+    const splash = document.getElementById('splash');
+    const mainApp = document.getElementById('main-app');
+    const splashTimer = document.getElementById('splashTimer');
+    const splashPct = document.getElementById('splashPct');
+    const carVideo = document.getElementById('carDriftVideo');
+
+    // Attempt autoplay immediately
+    if (carVideo) {
+      carVideo.play().catch(() => {});
+    }
+
+    // High precision countdown loop
+    function updateCountdown(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const remaining = Math.max(0, DURATION - elapsed);
+      const progress = Math.min(1, elapsed / DURATION);
+
+      splashTimer.textContent = (remaining / 1000).toFixed(2) + 's';
+      splashPct.textContent = Math.floor(progress * 100) + '%';
+
+      if (elapsed < DURATION && !isRemoved) {
+        requestAnimationFrame(updateCountdown);
+      } else if (!isRemoved) {
+        removeSplash();
+      }
+    }
+
+    requestAnimationFrame(updateCountdown);
+
+    // Removes the splash screen and activates the front end
+    function removeSplash() {
+      if (isRemoved) return;
+      isRemoved = true;
+
+      // 1. Fade out splash
+      splash.classList.add('fade-out');
+
+      // 2. Reveal main website
+      mainApp.classList.add('active');
+
+      // Start 3D Fire & Particle Dynamics
+      initFireEffects();
+
+      // 3. Completely remove splash from DOM after animation completes
+      setTimeout(() => {
+        if (carVideo) carVideo.pause();
+        if (splash && splash.parentNode) {
+          splash.parentNode.removeChild(splash);
+        }
+      }, 800);
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    // 3D DYNAMICS: FIRE PARTICLES, 3D CARD TILT & PARALLAX
+    // ═════════════════════════════════════════════════════════════════
+    function initFireEffects() {
+      const canvas = document.getElementById('fireCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      // ── 3D VOLUMETRIC FIRE & EMBER PARTICLE ENGINE ──
+      const particles = [];
+      const MAX_PARTICLES = 52; // Optimal density across viewport, uniform & dynamic
+
+      let mouseParallaxX = 0;
+      let mouseParallaxY = 0;
+
+      class FireEmber {
+        constructor(x, y, isBurst = false, isTopEmber = false) {
+          this.isBurst = isBurst;
+          this.isTopEmber = isTopEmber;
+          this.reset(x, y, isBurst, isTopEmber);
+        }
+
+        reset(x, y, isBurst = false, isTopEmber = false) {
+          this.isBurst = isBurst;
+          this.isTopEmber = isTopEmber;
+
+          // 3D Volumetric Depth: z ranges from 0.5 (deep background) to 2.2 (vivid foreground)
+          this.z = Math.random() * 1.7 + 0.5;
+
+          if (isTopEmber) {
+            // Dedicated Top Fire: spawn directly around the hero ME logo or top 35% of the viewport
+            const logoEl = document.getElementById('heroLogoImg');
+            if (logoEl && Math.random() < 0.65) {
+              const rect = logoEl.getBoundingClientRect();
+              this.x = rect.left + rect.width / 2 + (Math.random() - 0.5) * (rect.width * 1.3);
+              this.y = rect.top + rect.height * 0.75 + (Math.random() - 0.5) * 20;
+            } else {
+              this.x = x !== undefined ? x : Math.random() * width;
+              this.y = y !== undefined ? y : Math.random() * (height * 0.35);
+            }
+          } else {
+            this.x = x !== undefined ? x : Math.random() * width;
+            this.y = y !== undefined ? y : Math.random() * height;
+          }
+
+          this.baseSize = isBurst ? Math.random() * 2.2 + 1.1 : Math.random() * 1.6 + 0.8;
+          this.size = this.baseSize * this.z;
+          this.life = isBurst ? (Math.random() * 32 + 22) : (Math.random() * 180 + 110);
+          this.maxLife = this.life;
+          
+          if (isBurst) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = (Math.random() * 3.8 + 1.2) * this.z;
+            this.vx = Math.cos(angle) * speed;
+            this.vy = Math.sin(angle) * speed - 1.0;
+          } else if (isTopEmber) {
+            this.vx = (Math.random() - 0.5) * 1.2 * this.z;
+            this.vy = -(Math.random() * 1.6 + 0.8) * this.z; // Energetic upward rising speed
+          } else {
+            this.vx = (Math.random() - 0.5) * 0.7 * this.z;
+            this.vy = -(Math.random() * 1.0 + 0.45) * this.z; // Gentle atmospheric drift
+          }
+
+          // Warm incandescent fire palettes
+          const palettes = [
+            { core: '#ffffff', mid: '#ffe066', glow: 'rgba(255, 140, 0, 0.9)' },
+            { core: '#fff3a8', mid: '#ffaa00', glow: 'rgba(255, 60, 0, 0.85)' },
+            { core: '#ffdd88', mid: '#ff6600', glow: 'rgba(220, 20, 20, 0.8)' },
+            { core: '#ffccaa', mid: '#ff3322', glow: 'rgba(180, 0, 0, 0.75)' }
+          ];
+          this.colorScheme = palettes[Math.floor(Math.random() * palettes.length)];
+          this.sway = Math.random() * 0.025 + 0.015;
+          this.swayOffset = Math.random() * Math.PI * 2;
+        }
+
+        update() {
+          this.life--;
+          // Apply 3D parallax drift according to depth z
+          const parallaxDx = mouseParallaxX * this.z * 0.06;
+          const parallaxDy = mouseParallaxY * this.z * 0.04;
+
+          this.x += this.vx + Math.sin(this.swayOffset) * (0.45 * this.z) + parallaxDx;
+          this.y += this.vy + parallaxDy;
+          this.swayOffset += this.sway;
+
+          // Smooth sine curve: starts at 0 opacity, peaks with depth weighting, fades out
+          const progress = Math.max(0, Math.min(1, this.life / this.maxLife));
+          const maxAlpha = this.isBurst ? 0.9 : (0.55 + this.z * 0.16);
+          this.alpha = Math.sin(progress * Math.PI) * maxAlpha;
+
+          if (this.life <= 0 || this.y < -30 || this.x < -40 || this.x > width + 40) {
+            if (this.isBurst) {
+              this.dead = true;
+            } else {
+              this.reset(undefined, undefined, false, this.isTopEmber);
+            }
+          }
+        }
+
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = Math.min(1, Math.max(0, this.alpha));
+
+          // 3D Fire Ember Glowing Radial Core
+          const radius = Math.max(1, this.size * 2.2);
+          const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, radius);
+          grad.addColorStop(0, this.colorScheme.core);
+          grad.addColorStop(0.3, this.colorScheme.mid);
+          grad.addColorStop(0.7, this.colorScheme.glow);
+          grad.addColorStop(1, 'rgba(255, 30, 0, 0)');
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.restore();
+        }
+      }
+
+      // Initialize particles: half ambient, half dedicated top fire embers
+      for (let i = 0; i < MAX_PARTICLES; i++) {
+        const isTop = (i % 2 === 0);
+        particles.push(new FireEmber(undefined, undefined, false, isTop));
+      }
+
+      // Top logo fire spark emission interval (continuously rises from the top)
+      setInterval(() => {
+        if (particles.length < MAX_PARTICLES + 16) {
+          particles.push(new FireEmber(undefined, undefined, false, true));
+        }
+      }, 350);
+
+      // Interactive Mouse Trail Fire Sparks
+      window.addEventListener('mousemove', (e) => {
+        if (particles.length < MAX_PARTICLES + 30) {
+          particles.push(new FireEmber(e.clientX, e.clientY, true));
+        }
+      });
+
+      // Interactive Click Flame Spark
+      window.addEventListener('click', (e) => {
+        for (let i = 0; i < 9; i++) {
+          particles.push(new FireEmber(e.clientX, e.clientY, true));
+        }
+      });
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.update();
+          if (p.dead) {
+            particles.splice(i, 1);
+            continue;
+          }
+          p.draw();
+        }
+
+        requestAnimationFrame(animateParticles);
+      }
+
+      animateParticles();
+
+      // ── 3D CARD TILT WITH SPECULAR LIGHT GLARE (+20% DEPTH BOOST) ──
+      const cards = document.querySelectorAll('.event-item-card');
+      cards.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          // 3D rotation angles boosted by ~20% (-13.5deg to +13.5deg)
+          const rotateX = ((y - centerY) / centerY) * -13.5;
+          const rotateY = ((x - centerX) / centerX) * 13.5;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.055, 1.055, 1.055)`;
+
+          // Specular light glare coordinates
+          const glareX = (x / rect.width) * 100;
+          const glareY = (y / rect.height) * 100;
+          card.style.setProperty('--gx', `${glareX}%`);
+          card.style.setProperty('--gy', `${glareY}%`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+      });
+
+      // ── 3D HERO PARALLAX DEPTH (+20% - 25% BOOST) ──
+      const heroContent = document.querySelector('.hero-content');
+      const heroStage = document.querySelector('.hero-bg-stage');
+      const heroFire = document.querySelector('.hero-fire-wrap');
+      const heroSilhouette = document.querySelector('.hero-silhouette-wrap');
+
+      window.addEventListener('mousemove', (e) => {
+        const normX = (e.clientX / window.innerWidth - 0.5) * 2;
+        const normY = (e.clientY / window.innerHeight - 0.5) * 2;
+
+        mouseParallaxX = normX * 4.5;
+        mouseParallaxY = normY * 3.5;
+
+        if (heroContent) {
+          heroContent.style.transform = `translate3d(${normX * 10.5}px, ${normY * 8}px, 0)`;
+        }
+        if (heroStage) {
+          heroStage.style.transform = `translate3d(${normX * -18}px, ${normY * -13}px, 0) scale(1.035)`;
+        }
+        if (heroFire) {
+          heroFire.style.transform = `perspective(800px) rotateY(${normX * 10}deg) rotateX(${normY * -8}deg)`;
+        }
+        if (heroSilhouette) {
+          heroSilhouette.style.transform = `translate3d(${normX * -8}px, ${normY * -6}px, 0)`;
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
