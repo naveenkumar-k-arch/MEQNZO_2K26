@@ -491,43 +491,28 @@
       background: radial-gradient(circle at 75% 45%, rgba(180, 15, 20, 0.35) 0%, rgba(5, 5, 7, 0.95) 70%);
     }
 
-    /* Hero Background Image: Exact Auditorium Concert Stage from reference */
+    /* Hero Background Image: Exact Auditorium Concert Stage with Hooded Performer from reference */
     .hero-bg-stage {
       position: absolute;
       right: 0;
       top: 0;
       bottom: 0;
-      width: 60%;
-      background: url('images/hero-stage.jpg') center right / cover no-repeat;
-      filter: contrast(1.1) brightness(0.95);
-      z-index: 1;
-      mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
-      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
-    }
-
-    /* Red tint overlay to complement hero stage */
-    .hero-bg-red-tint {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 60%;
-      background: linear-gradient(135deg, rgba(255, 20, 30, 0.25) 0%, rgba(80, 5, 10, 0.5) 100%);
-      mix-blend-mode: screen;
+      width: 52%;
+      max-width: 680px;
+      background: url('images/desktop_stage_hero.png') center right / contain no-repeat;
       z-index: 2;
       pointer-events: none;
-      mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
-      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+      filter: contrast(1.15) brightness(1.05);
     }
 
-    /* Silhouette Performer on Stage with Red Hoodie ME logo */
+    /* Red tint overlay */
+    .hero-bg-red-tint {
+      display: none;
+    }
+
+    /* Silhouette Performer on Stage (now integrated directly in high-res stage artwork) */
     .hero-silhouette-wrap {
-      position: absolute;
-      right: 18%;
-      bottom: 60px;
-      z-index: 3;
-      pointer-events: none;
-      text-align: center;
+      display: none;
     }
 
     .hero-content {
@@ -603,25 +588,9 @@
       font-weight: 400;
     }
 
-    /* Right Handwritten Text: Think / Build / Create / Compete */
+    /* Right Handwritten Text: Integrated in stage artwork */
     .hero-side-slogans {
-      position: absolute;
-      right: 20px;
-      top: 30%;
-      max-width: 160px;
-      overflow: hidden;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      text-align: right;
-      font-family: 'Permanent Marker', cursive;
-      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
-      color: var(--yellow-accent);
-      line-height: 1.15;
-      transform: rotate(2deg);
-      text-shadow: 0 2px 12px rgba(0,0,0,0.9);
-      pointer-events: none;
+      display: none;
     }
 
     /* ═════════════════════════════════════════════════════════════════
@@ -662,16 +631,20 @@
     }
 
     .events-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2.3rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
+      font-family: 'Permanent Marker', cursive;
+      font-size: clamp(2.3rem, 3.8vw, 3rem);
+      letter-spacing: 0.02em;
       color: #fff;
       margin-bottom: 6px;
     }
 
     .events-title span {
+      font-family: 'Oswald', sans-serif;
+      font-style: italic;
+      font-size: clamp(2.8rem, 4.5vw, 3.6rem);
+      font-weight: 900;
       color: var(--red-primary);
+      margin-right: 8px;
     }
 
     .events-subtitle {
@@ -775,14 +748,12 @@
     }
 
     .card-event-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.08rem;
+      letter-spacing: 0.03em;
       color: #fff;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      line-height: 1.15;
+      margin-bottom: 6px;
+      line-height: 1.2;
     }
 
     .card-event-desc {
@@ -817,26 +788,28 @@
 
     .btn-card-explore {
       background: transparent;
-      border: 1px solid rgba(245, 179, 0, 0.55);
-      color: #fff;
+      border: 1px solid var(--yellow-accent);
+      color: var(--yellow-accent);
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.74rem;
-      font-weight: 600;
+      font-size: 0.72rem;
+      font-weight: 700;
       letter-spacing: 0.04em;
-      padding: 7px 12px;
-      border-radius: 4px;
-      display: flex;
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       text-decoration: none;
       transition: all 0.2s ease;
+      align-self: flex-end;
+      margin-top: auto;
     }
 
     .btn-card-explore:hover {
-      background: rgba(245, 179, 0, 0.15);
-      border-color: var(--yellow-accent);
-      color: var(--yellow-accent);
+      background: var(--yellow-accent);
+      color: #000;
+      box-shadow: 0 0 15px rgba(245, 179, 0, 0.4);
     }
 
     /* ═════════════════════════════════════════════════════════════════
