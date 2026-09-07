@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MEQNZO_2K26 | Where Ideas Meet Innovation</title>
+  <title>MEQNZO_2K26 | Igniting Mechanical Excellence</title>
   <link rel="icon" type="image/png" href="images/me-logo.png">
   <!-- Google Fonts: Oswald for bold headings, Montserrat for clean UI, Permanent Marker / Caveat for handwritten accents -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -646,6 +646,8 @@
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 30, 39, 0.2);
     }
 
+    
+    .card-mobile-cat { display: none; }
     .card-top-header {
       padding: 12px 14px;
       display: flex;
@@ -1281,43 +1283,493 @@
       transform: scale(1);
     }
 
+    
+    /* ═════════════════════════════════════════════════════════════════
+       MOBILE HAMBURGER & NAVIGATION DRAWER
+       ═════════════════════════════════════════════════════════════════ */
+    .mobile-hamburger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 26px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1000;
+    }
+
+    .mobile-hamburger-btn span {
+      width: 100%;
+      height: 2.2px;
+      background: #ffffff;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 99998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-nav-drawer {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 280px;
+      max-width: 85vw;
+      height: 100vh;
+      background: #0c0d12;
+      border-left: 1px solid rgba(255, 30, 39, 0.35);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 20px;
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -10px 0 35px rgba(0, 0, 0, 0.85);
+    }
+
+    .mobile-nav-drawer.open {
+      right: 0;
+    }
+
+    .drawer-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 24px;
+    }
+
+    .drawer-close-btn {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 2.2rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    .drawer-close-btn:hover {
+      color: var(--red-primary);
+    }
+
+    .drawer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .drawer-link {
+      text-decoration: none;
+      color: #d1d5db;
+      font-size: 1.05rem;
+      font-weight: 600;
+      transition: color 0.2s;
+      display: block;
+    }
+
+    .drawer-link.active,
+    .drawer-link:hover {
+      color: var(--red-primary);
+    }
+
+    .drawer-footer-cta {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
     /* Responsive Queries */
     @media (max-width: 1200px) {
       .events-cards-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
     @media (max-width: 900px) {
-      header.navbar { padding: 14px 24px; }
+      header.navbar { padding: 14px 20px; }
       .nav-menu { display: none; }
-      .hero-section { padding: 40px 24px 60px; }
-      .hero-bg-stage { width: 100%; opacity: 0.35; }
-      .hero-side-slogans { display: none; }
-      .events-section { padding: 50px 24px; }
+      .mobile-hamburger-btn { display: flex; }
+      .hero-section { padding: 36px 20px 50px; }
+      .hero-bg-stage { width: 100%; opacity: 0.45; }
+      .events-section { padding: 45px 20px; }
       .events-cards-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-container { grid-template-columns: repeat(2, 1fr); }
       .featured-grid { grid-template-columns: 1fr; }
       .featured-features-list { grid-template-columns: 1fr; }
     }
 
+    /* ═════════════════════════════════════════════════════════════════
+       MOBILE OPTIMIZED VIEW (EXACT REPLICA OF MOBILE REFERENCE)
+       ═════════════════════════════════════════════════════════════════ */
     @media (max-width: 600px) {
-      header.navbar { padding: 12px 16px; }
-      .brand-text { font-size: 1.2rem; }
-      .nav-right { gap: 10px; }
-      .btn-red-pill { padding: 8px 16px; font-size: 0.78rem; }
-      .hero-section { padding: 32px 18px 50px; }
-      .hero-main-title { font-size: 2.9rem; }
-      .hero-tagline { font-size: 1.25rem; }
-      .events-section { padding: 40px 18px; }
-      .events-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .events-cards-grid { grid-template-columns: 1fr; gap: 18px; }
-      .stats-ribbon { padding: 26px 18px; }
-      .stats-container { grid-template-columns: 1fr; gap: 20px; }
-      .featured-section { padding: 50px 18px; }
-      footer.main-footer { padding: 30px 18px 24px; }
-      .footer-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
-      .splash-top-hud { padding-bottom: 8px; font-size: 0.75rem; }
-      .hud-title { font-size: 0.7rem; letter-spacing: 0.12em; }
-      .hud-timer { font-size: 1rem; }
+      /* Mobile Navbar */
+      header.navbar {
+        padding: 10px 16px;
+        background: rgba(5, 5, 7, 0.95);
+      }
+      .brand-text { font-size: 1.15rem; }
+      .nav-right { gap: 8px; }
+      .nav-right .search-btn { display: none; }
+      .btn-red-pill {
+        padding: 6px 14px;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+      .mobile-hamburger-btn {
+        display: flex;
+        margin-left: 2px;
+      }
+
+      /* Mobile Hero Section */
+      .hero-section {
+        padding: 24px 16px 44px;
+        min-height: auto;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-bg-stage {
+        width: 100%;
+        opacity: 0.55;
+        background-position: center right;
+      }
+      .hero-slider-dots { display: none; }
+      .hero-content {
+        max-width: 100%;
+        position: relative;
+        z-index: 4;
+      }
+      .hero-logo-mark {
+        margin-bottom: 6px;
+      }
+      .hero-logo-img {
+        width: 48px;
+        height: 48px;
+      }
+      .hero-main-title {
+        font-size: 2.75rem;
+        letter-spacing: 0.03em;
+        margin-bottom: 4px;
+      }
+      .hero-tagline {
+        font-size: 1.12rem;
+        margin-bottom: 14px;
+        letter-spacing: 0.05em;
+        transform: rotate(-1.5deg);
+        display: inline-block;
+      }
+      .hero-desc {
+        font-size: 0.78rem;
+        line-height: 1.48;
+        max-width: 72%;
+        margin-bottom: 20px;
+        color: #d1d5db;
+      }
+      .hero-content .btn-red-pill {
+        padding: 8px 18px;
+        font-size: 0.78rem;
+      }
+      /* Right Handwritten Slogans on Mobile */
+      .hero-side-slogans {
+        display: flex !important;
+        position: absolute;
+        right: 12px;
+        top: 48%;
+        z-index: 5;
+        font-size: 1.05rem;
+        line-height: 1.15;
+        text-align: right;
+        gap: 2px;
+        transform: rotate(2deg);
+        text-shadow: 0 2px 10px rgba(0,0,0,0.95);
+      }
+
+      /* Mobile Events Section Header */
+      .events-section {
+        padding: 34px 14px 40px;
+      }
+      .events-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        margin-bottom: 20px;
+      }
+      .events-header .view-all-link {
+        display: none;
+      }
+      .section-sub-bar {
+        font-size: 0.72rem;
+        margin-bottom: 4px;
+      }
+      .events-title {
+        font-size: 2.1rem;
+        margin-bottom: 6px;
+      }
+      .events-subtitle {
+        font-size: 0.76rem;
+        line-height: 1.4;
+        max-width: 100%;
+      }
+
+      /* Mobile Horizontal Event Cards (Exact Match to User Reference) */
+      .events-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .event-item-card {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        gap: 12px;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(12, 13, 18, 0.96);
+        border: 1px solid rgba(255, 30, 39, 0.45);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+        transform: none !important;
+      }
+      .event-item-card:hover {
+        transform: none !important;
+        box-shadow: 0 4px 24px rgba(255, 30, 39, 0.35);
+      }
+      .card-top-header {
+        display: none;
+      }
+      .card-mobile-cat {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--yellow-tag);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .card-mobile-cat svg {
+        width: 13px;
+        height: 13px;
+        fill: currentColor;
+      }
+      .event-item-card .card-image-wrap {
+        width: 36%;
+        min-width: 105px;
+        max-width: 125px;
+        min-height: 110px;
+        height: auto;
+        border-radius: 7px;
+        overflow: hidden;
+        flex-shrink: 0;
+        margin: 0;
+        position: relative;
+      }
+      .event-item-card .card-image-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .event-item-card .card-body {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        min-width: 0;
+      }
+      .card-event-title {
+        font-size: 1.05rem;
+        font-weight: 800;
+        font-style: italic;
+        line-height: 1.15;
+        margin-bottom: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .card-event-desc {
+        font-size: 0.7rem;
+        line-height: 1.35;
+        color: #9ca3af;
+        margin-bottom: 6px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .card-schedule {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        margin-bottom: 6px;
+      }
+      .sched-row {
+        font-size: 0.67rem;
+        gap: 5px;
+        color: #d1d5db;
+      }
+      .sched-row svg {
+        width: 12px;
+        height: 12px;
+        fill: var(--red-primary);
+      }
+      .event-item-card .btn-card-explore {
+        align-self: flex-end;
+        padding: 4px 12px;
+        font-size: 0.67rem;
+        font-weight: 700;
+        border-radius: 50px;
+        border: 1px solid var(--yellow-accent);
+        background: transparent;
+        color: var(--yellow-accent);
+        margin-top: auto;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.2s;
+      }
+      .event-item-card .btn-card-explore:hover {
+        background: var(--yellow-accent);
+        color: #000;
+      }
+
+      /* Mobile 2x2 Stats Grid (Exact Match to User Reference) */
+      .stats-ribbon {
+        padding: 24px 14px;
+        background: #07080c;
+        border-top: 1px solid rgba(255, 30, 39, 0.2);
+        border-bottom: 1px solid rgba(255, 30, 39, 0.2);
+      }
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        max-width: 100%;
+      }
+      .stat-entry {
+        background: rgba(12, 13, 18, 0.95);
+        border: 1px solid rgba(255, 30, 39, 0.35);
+        border-radius: 10px;
+        padding: 12px 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .stat-icon-wrap {
+        margin-bottom: 0;
+      }
+      .stat-icon-wrap svg {
+        width: 26px;
+        height: 26px;
+        fill: var(--red-primary);
+      }
+      .stat-digit {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #fff;
+        font-family: 'Oswald', sans-serif;
+        line-height: 1.1;
+      }
+      .stat-tag {
+        font-size: 0.68rem;
+        color: #9ca3af;
+        white-space: nowrap;
+      }
+
+      /* Mobile Featured Section (Exact Match) */
+      .featured-section {
+        padding: 26px 14px 36px;
+      }
+      .featured-grid {
+        grid-template-columns: 1fr;
+        background: rgba(12, 13, 18, 0.95);
+        border: 1px solid rgba(255, 30, 39, 0.45);
+        border-radius: 12px;
+        padding: 18px 14px;
+        gap: 16px;
+      }
+      .featured-text-col {
+        order: 1;
+      }
+      .featured-sub-bar {
+        font-size: 0.7rem;
+        margin-bottom: 6px;
+      }
+      .featured-title {
+        font-size: 1.6rem;
+        line-height: 1.15;
+        margin-bottom: 10px;
+      }
+      .featured-desc {
+        font-size: 0.78rem;
+        line-height: 1.45;
+        margin-bottom: 16px;
+        color: #d1d5db;
+      }
+      .featured-features-list {
+        display: none;
+      }
+      .featured-visual {
+        order: 2;
+        width: 100%;
+        border-radius: 8px;
+        aspect-ratio: 16 / 9;
+        margin-top: 4px;
+      }
+
+      /* Mobile Footer */
+      footer.main-footer {
+        padding: 26px 14px 28px;
+        text-align: center;
+      }
+      .footer-top {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .footer-brand-col {
+        align-items: center;
+        text-align: center;
+      }
+      .footer-slogan {
+        display: none;
+      }
+      .footer-socials {
+        order: 2;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+      }
+      .footer-links {
+        order: 3;
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        font-size: 0.78rem;
+      }
+      .footer-bottom {
+        padding-top: 14px;
+        font-size: 0.72rem;
+      }
+
+      /* Splash adjustments */
       .splash-big-title { font-size: 2.7rem; }
       .splash-sub-text { font-size: 1.05rem; }
     }
@@ -1356,7 +1808,7 @@
       <img src="images/me-logo.png" alt="MEQNZO Logo" class="splash-logo-img">
       <div class="splash-tag">&#9889; DRIFT IGNITION &#9889;</div>
       <h1 class="splash-big-title">MEQNZO 2K26</h1>
-      <div class="splash-sub-text">WHERE IDEAS MEET INNOVATION</div>
+      <div class="splash-sub-text">IGNITING MECHANICAL EXCELLENCE</div>
     </div>
 
     <!-- Splash Bottom Progress Bar -->
@@ -1411,8 +1863,37 @@
           </svg>
         </button>
         <a href="#events" class="btn-red-pill">Register Now &rarr;</a>
+        <!-- Mobile Hamburger Button -->
+        <button class="mobile-hamburger-btn" id="mobileMenuBtn" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </header>
+
+    <!-- Mobile Navigation Drawer Overlay & Panel -->
+    <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-nav-drawer" id="mobileDrawer">
+      <div class="drawer-top-bar">
+        <div class="brand-logo">
+          <img src="images/me-logo.png" alt="MEQNZO Logo" class="nav-logo-img">
+          <span class="brand-text">MEQNZO_<span>2K26</span></span>
+        </div>
+        <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close menu">&times;</button>
+      </div>
+      <ul class="drawer-nav-list">
+        <li><a href="#home" class="drawer-link active">Home</a></li>
+        <li><a href="#events" class="drawer-link">Events</a></li>
+        <li><a href="#about" class="drawer-link">About</a></li>
+        <li><a href="#gallery" class="drawer-link">Gallery</a></li>
+        <li><a href="#contact" class="drawer-link">Contact</a></li>
+        <li><a href="https://www.instagram.com/meqnzo_2k26?stkn=eXd6czdieXB6N201" target="_blank" rel="noopener noreferrer" class="drawer-link" style="color: #f5b300;">Instagram &#8599;</a></li>
+      </ul>
+      <div class="drawer-footer-cta">
+        <a href="#events" class="btn-red-pill" style="width: 100%; justify-content: center;" onclick="closeMobileDrawer()">Register Now &rarr;</a>
+      </div>
+    </div>
 
 
     <!-- Hero Section -->
@@ -1450,7 +1931,7 @@
 
         <h1 class="hero-main-title">MEQNZO_<span>2K26</span></h1>
         
-        <div class="hero-tagline">WHERE IDEAS MEET INNOVATION</div>
+        <div class="hero-tagline">IGNITING MECHANICAL EXCELLENCE</div>
 
         <p class="hero-desc">
           A celebration of ideas, talent and creativity. Meqnzo_2K26 brings together minds, skills and passion through exciting events, challenges and competitions.
@@ -1517,7 +1998,11 @@
             <div class="card-image-tint"></div>
           </div>
           <div class="card-body">
-            <h3 class="card-event-title">PAPER PRESENTATION</h3>
+            <div class="card-mobile-cat">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                <span>ACADEMIC</span>
+              </div>
+              <h3 class="card-event-title">PAPER PRESENTATION</h3>
             <p class="card-event-desc">Present your ideas, share your insights and make your voice heard.</p>
             <div class="card-schedule">
               <div class="sched-row">
@@ -1545,7 +2030,11 @@
             <div class="card-image-tint"></div>
           </div>
           <div class="card-body">
-            <h3 class="card-event-title">MODEL MASTERS</h3>
+            <div class="card-mobile-cat">
+                <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                <span>TECH &amp; INNOVATION</span>
+              </div>
+              <h3 class="card-event-title">MODEL MASTERS</h3>
             <p class="card-event-desc">Design. Build. Innovate. Turn your creativity into working models.</p>
             <div class="card-schedule">
               <div class="sched-row">
@@ -1573,7 +2062,11 @@
             <div class="card-image-tint"></div>
           </div>
           <div class="card-body">
-            <h3 class="card-event-title">TECHGEEZZ</h3>
+            <div class="card-mobile-cat">
+                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                <span>TECH &amp; CODING</span>
+              </div>
+              <h3 class="card-event-title">TECHGEEZZ</h3>
             <p class="card-event-desc">Think. Code. Solve. Take on real-world problems with your tech skills.</p>
             <div class="card-schedule">
               <div class="sched-row">
@@ -1601,7 +2094,11 @@
             <div class="card-image-tint"></div>
           </div>
           <div class="card-body">
-            <h3 class="card-event-title">KURAL 712</h3>
+            <div class="card-mobile-cat">
+                <svg viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2s-2-.9-2-2V4c0-1.1.9-2 2-2zm6 8c0 3.08-2.3 5.62-5.25 5.94V19h2.25v2h-6v-2h2.25v-3.06C8.3 15.62 6 13.08 6 10H4c0 4.08 3.05 7.44 7 7.93V21h2v-3.07c3.95-.49 7-3.85 7-7.93h-2z"/></svg>
+                <span>LITERARY</span>
+              </div>
+              <h3 class="card-event-title">KURAL 712</h3>
             <p class="card-event-desc">Words have power. Express, inspire and make an impact.</p>
             <div class="card-schedule">
               <div class="sched-row">
@@ -1629,7 +2126,11 @@
             <div class="card-image-tint"></div>
           </div>
           <div class="card-body">
-            <h3 class="card-event-title">MECH ODU VILAYADU</h3>
+            <div class="card-mobile-cat">
+                <svg viewBox="0 0 24 24"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7.1 1.5z"/></svg>
+                <span>NON-TECHNICAL</span>
+              </div>
+              <h3 class="card-event-title">MECH ODU VILAYADU</h3>
             <p class="card-event-desc">Speed, strategy and teamwork. Show what you're made of.</p>
             <div class="card-schedule">
               <div class="sched-row">
@@ -2104,7 +2605,33 @@
         });
       });
 
-      // ── 3D HERO PARALLAX DEPTH (+20% - 25% BOOST) ──
+      
+    // ── MOBILE NAVIGATION DRAWER TOGGLE ──
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerCloseBtn = document.getElementById('drawerCloseBtn');
+
+    function openMobileDrawer() {
+      if (mobileDrawer) mobileDrawer.classList.add('open');
+      if (drawerOverlay) drawerOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileDrawer() {
+      if (mobileDrawer) mobileDrawer.classList.remove('open');
+      if (drawerOverlay) drawerOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileDrawer);
+    if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeMobileDrawer);
+    if (drawerOverlay) drawerOverlay.addEventListener('click', closeMobileDrawer);
+    document.querySelectorAll('.drawer-link').forEach(link => {
+      link.addEventListener('click', closeMobileDrawer);
+    });
+
+    // ── 3D HERO PARALLAX DEPTH (+20% - 25% BOOST) ──
       const heroContent = document.querySelector('.hero-content');
       const heroStage = document.querySelector('.hero-bg-stage');
       const heroSpark = document.querySelector('.hero-spark-wrap');
