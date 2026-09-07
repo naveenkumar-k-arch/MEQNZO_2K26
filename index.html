@@ -196,6 +196,30 @@
       color: #000;
     }
 
+    .splash-sound-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 30, 39, 0.2);
+      border: 1px solid var(--yellow-accent);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      padding: 5px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(245, 179, 0, 0.35);
+      animation: soundPulse 1.2s infinite alternate;
+      margin-top: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .splash-sound-pill:hover {
+      background: var(--yellow-accent);
+      color: #000;
+    }
+
     .splash-center-content {
       position: relative;
       z-index: 10;
@@ -1767,6 +1791,9 @@
     <div class="splash-center-content">
       <img src="images/me-logo.png" alt="MEQNZO Logo" class="splash-logo-img">
       <div class="splash-tag">&#9889; DRIFT IGNITION &#9889;</div>
+      <div id="soundBadge" class="splash-sound-pill" onclick="forceUnmute(event)" title="Toggle Sound">
+        <span>🔊 SOUND ON</span>
+      </div>
       <h1 class="splash-big-title">MEQNZO 2K26</h1>
       <div class="splash-sub-text">IGNITING MECHANICAL EXCELLENCE</div>
     </div>
@@ -2292,29 +2319,46 @@
     function updateSoundUI(hasSound) {
       if (soundIcon && soundText) {
         soundIcon.textContent = hasSound ? '🔊' : '🔇';
-        soundText.textContent = hasSound ? 'AUDIO ON' : 'UNMUTE';
+        soundText.textContent = hasSound ? 'AUDIO ON' : 'TAP FOR SOUND';
       }
+      const badge = document.getElementById('soundBadge');
+      if (badge) {
+        badge.innerHTML = hasSound ? '<span>🔊 SOUND ON</span>' : '<span>🔇 TAP FOR SOUND</span>';
+      }
+    }
+
+    function forceUnmute(e) {
+      if (e) e.stopPropagation();
+      if (!carVideo) return;
+      carVideo.muted = false;
+      carVideo.volume = 1.0;
+      updateSoundUI(true);
+      carVideo.play().catch(() => {});
     }
 
     function toggleSplashSound(e) {
       if (e) e.stopPropagation();
       if (!carVideo) return;
       carVideo.muted = !carVideo.muted;
-      updateSoundUI(!carVideo.muted);
       if (!carVideo.muted) {
+        carVideo.volume = 1.0;
         carVideo.play().catch(() => {});
       }
+      updateSoundUI(!carVideo.muted);
     }
 
-    // Try playing unmuted audio immediately
+    // Default sound ON: Set volume to max and muted to false
     if (carVideo) {
+      carVideo.defaultMuted = false;
       carVideo.muted = false;
+      carVideo.volume = 1.0;
+
       const playPromise = carVideo.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
           updateSoundUI(true);
         }).catch(() => {
-          // Browser autoplay security blocked unmuted audio; start muted and unmute on first user tap
+          // If browser restricts unmuted autoplay on cold start, play muted and instantly unmute on touch
           carVideo.muted = true;
           carVideo.play().catch(() => {});
           updateSoundUI(false);
@@ -2322,17 +2366,14 @@
       }
     }
 
-    // Unmute on first user touch / click anywhere during splash
-    function onSplashUserInteract() {
-      if (carVideo && carVideo.muted) {
-        carVideo.muted = false;
-        updateSoundUI(true);
-      }
-    }
-    if (splash) {
-      splash.addEventListener('click', onSplashUserInteract, { once: true });
-      splash.addEventListener('touchstart', onSplashUserInteract, { once: true });
-    }
+    // Global listener on any screen touch/click/key to immediately engage audio
+    ['touchstart', 'touchend', 'pointerdown', 'mousedown', 'click', 'keydown'].forEach(evt => {
+      window.addEventListener(evt, () => {
+        if (carVideo && carVideo.muted) {
+          forceUnmute();
+        }
+      }, { passive: true });
+    });
 
     // High precision countdown loop
     function updateCountdown(timestamp) {
