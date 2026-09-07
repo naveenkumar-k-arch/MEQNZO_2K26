@@ -167,6 +167,35 @@
       box-shadow: 0 0 20px var(--red-primary);
     }
 
+    .sound-splash-btn {
+      background: rgba(245, 179, 0, 0.2);
+      border: 1px solid var(--yellow-accent);
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 10px rgba(245, 179, 0, 0.35);
+      animation: soundPulse 1.2s infinite alternate;
+    }
+
+    @keyframes soundPulse {
+      from { transform: scale(1); box-shadow: 0 0 8px rgba(245, 179, 0, 0.3); }
+      to { transform: scale(1.04); box-shadow: 0 0 16px rgba(245, 179, 0, 0.8); }
+    }
+
+    .sound-splash-btn:hover {
+      background: var(--yellow-accent);
+      color: #000;
+    }
+
     .splash-center-content {
       position: relative;
       z-index: 10;
@@ -1711,7 +1740,7 @@
     
     <!-- Real Video Background -->
     <div class="splash-video-wrap">
-      <video id="carDriftVideo" autoplay muted loop playsinline preload="auto">
+      <video id="carDriftVideo" autoplay loop playsinline preload="auto">
         <source src="hero_clip_11_14.mp4" type="video/mp4">
         <source src="drift.webm" type="video/webm">
       </video>
@@ -1723,10 +1752,15 @@
     <div class="splash-top-hud">
       <div class="hud-title">
         <span class="hud-dot"></span>
-        <span>MEQNZO 2K26 // TRACK DRIFT INTRO</span>
+        <span>MEQNZO 2K26 // DRIFT INTRO</span>
       </div>
-      <div class="hud-timer" id="splashTimer">04.00s</div>
-      <button class="skip-splash-btn" onclick="removeSplash()">SKIP INTRO &rarr;</button>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button id="splashSoundBtn" class="sound-splash-btn" onclick="toggleSplashSound(event)" title="Toggle Audio">
+          <span id="soundIcon">🔊</span> <span id="soundText">AUDIO ON</span>
+        </button>
+        <div class="hud-timer" id="splashTimer">04.00s</div>
+        <button class="skip-splash-btn" onclick="removeSplash()">SKIP &rarr;</button>
+      </div>
     </div>
 
     <!-- Splash Center Branding -->
@@ -2252,10 +2286,52 @@
     const splashTimer = document.getElementById('splashTimer');
     const splashPct = document.getElementById('splashPct');
     const carVideo = document.getElementById('carDriftVideo');
+    const soundIcon = document.getElementById('soundIcon');
+    const soundText = document.getElementById('soundText');
 
-    // Attempt autoplay immediately
+    function updateSoundUI(hasSound) {
+      if (soundIcon && soundText) {
+        soundIcon.textContent = hasSound ? '🔊' : '🔇';
+        soundText.textContent = hasSound ? 'AUDIO ON' : 'UNMUTE';
+      }
+    }
+
+    function toggleSplashSound(e) {
+      if (e) e.stopPropagation();
+      if (!carVideo) return;
+      carVideo.muted = !carVideo.muted;
+      updateSoundUI(!carVideo.muted);
+      if (!carVideo.muted) {
+        carVideo.play().catch(() => {});
+      }
+    }
+
+    // Try playing unmuted audio immediately
     if (carVideo) {
-      carVideo.play().catch(() => {});
+      carVideo.muted = false;
+      const playPromise = carVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          updateSoundUI(true);
+        }).catch(() => {
+          // Browser autoplay security blocked unmuted audio; start muted and unmute on first user tap
+          carVideo.muted = true;
+          carVideo.play().catch(() => {});
+          updateSoundUI(false);
+        });
+      }
+    }
+
+    // Unmute on first user touch / click anywhere during splash
+    function onSplashUserInteract() {
+      if (carVideo && carVideo.muted) {
+        carVideo.muted = false;
+        updateSoundUI(true);
+      }
+    }
+    if (splash) {
+      splash.addEventListener('click', onSplashUserInteract, { once: true });
+      splash.addEventListener('touchstart', onSplashUserInteract, { once: true });
     }
 
     // High precision countdown loop
