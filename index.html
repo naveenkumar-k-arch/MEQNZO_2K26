@@ -351,38 +351,20 @@
       overflow: hidden;
     }
 
-    /* Navbar with Electric Spark Accent */
+    /* Clean Modern Navbar */
     header.navbar {
       position: sticky;
       top: 0;
       z-index: 1000;
       background: rgba(5, 5, 7, 0.94);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 60, 20, 0.28);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 30, 39, 0.25);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
       padding: 16px 54px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    header.navbar::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: 1.5px;
-      background: linear-gradient(90deg, transparent, #ff1e27 25%, #ffcc00 50%, #ffffff 52%, #ffcc00 54%, #ff1e27 75%, transparent 100%);
-      background-size: 200% 100%;
-      animation: navbarSparkGlow 3.5s linear infinite;
-      box-shadow: 0 0 10px #ffbb00, 0 0 20px rgba(255, 50, 0, 0.3);
-      pointer-events: none;
-    }
-
-    @keyframes navbarSparkGlow {
-      0% { background-position: 100% 0; }
-      100% { background-position: -100% 0; }
     }
 
     .brand-logo {
@@ -1245,23 +1227,10 @@
       transform: scale(1.03);
     }
 
-    /* Fire Flame Text Shimmer */
     .events-title span {
       display: inline-block;
-      color: #ff2200;
-      text-shadow: 0 0 10px #ff2a00, 0 0 22px #ff6600, 0 0 40px #ffbb00;
-      animation: fireTextShimmer 1.4s ease-in-out infinite alternate;
-    }
-
-    @keyframes fireTextShimmer {
-      0% {
-        text-shadow: 0 0 10px #ff2a00, 0 0 20px #ff6600, 0 0 35px #ffaa00;
-        transform: scale(1);
-      }
-      100% {
-        text-shadow: 0 0 18px #ff0000, 0 0 32px #ff4400, 0 0 55px #ffea00;
-        transform: scale(1.05);
-      }
+      color: var(--red-primary);
+      text-shadow: 0 0 16px rgba(255, 30, 39, 0.65);
     }
 
     /* Button Flame Border Glow */
