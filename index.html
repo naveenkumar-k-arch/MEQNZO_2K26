@@ -478,6 +478,20 @@
       box-shadow: 0 8px 30px rgba(255, 30, 39, 0.75), 0 0 15px rgba(255, 140, 0, 0.4);
     }
 
+    /* Mobile Hero Banner - Explicitly hidden on desktop web */
+    .mobile-hero-banner {
+      display: none !important;
+    }
+
+    @media (min-width: 851px) {
+      .mobile-hero-banner {
+        display: none !important;
+      }
+      .hero-section {
+        display: flex !important;
+      }
+    }
+
     /* ═════════════════════════════════════════════════════════════════
        HERO SECTION
        ═════════════════════════════════════════════════════════════════ */
@@ -1962,8 +1976,8 @@
     </div>
 
 
-    <!-- Dedicated Mobile Hero Banner (100% Exact Match to Reference Design) -->
-    <div class="mobile-hero-banner" id="mobileHeroBanner">
+    <!-- Dedicated Mobile Hero Banner (100% Exact Match to Reference Design on Mobile Only) -->
+    <div class="mobile-hero-banner" id="mobileHeroBanner" style="display: none;">
       <img src="images/hero_mobile_clean.png" alt="MEQNZO 2K26 - Where Ideas Meet Innovation" class="mobile-hero-clean-img">
       <a href="#events" class="mobile-hero-btn-overlay" aria-label="Explore Events"></a>
     </div>
@@ -2017,26 +2031,6 @@
       <!-- Hero Background Stage Visual (Auditorium with Red Beams & Audience) -->
       <div class="hero-bg-stage"></div>
       <div class="hero-bg-red-tint"></div>
-
-      <!-- Hero Silhouette Performer with Red ME Logo on hoodie -->
-      <div class="hero-silhouette-wrap">
-        <svg width="240" height="340" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Person head/hoodie -->
-          <path d="M80 80 Q100 50 120 80 Q130 110 120 130 Q100 145 80 130 Q70 110 80 80 Z" fill="#08080a"/>
-          <!-- Shoulders & back -->
-          <path d="M50 140 Q100 120 150 140 L165 290 L35 290 Z" fill="#0c0d12"/>
-          <!-- Official ME Logo on back of hoodie -->
-          <image href="images/me-logo.png" x="78" y="165" width="44" height="44" />
-        </svg>
-      </div>
-
-      <!-- Right Handwritten Slogans -->
-      <div class="hero-side-slogans">
-        <span>Think</span>
-        <span>Build</span>
-        <span>Create</span>
-        <span>Compete</span>
-      </div>
 
     </section>
 
