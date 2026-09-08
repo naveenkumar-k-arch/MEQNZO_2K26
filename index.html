@@ -2358,7 +2358,33 @@
     const splashPct = document.getElementById('splashPct');
     const carVideo = document.getElementById('carDriftVideo');
 
-    // Default sound ON: Set volume to max and muted to false
+    let audioCtx = null;
+    let gainNode = null;
+
+    function engageHighSound() {
+      if (isRemoved || !carVideo) return;
+      try {
+        carVideo.muted = false;
+        carVideo.volume = 1.0;
+
+        // Web Audio API gain amplifier for extra high, punchy sound
+        if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AudioContextClass();
+          const source = audioCtx.createMediaElementSource(carVideo);
+          gainNode = audioCtx.createGain();
+          gainNode.gain.value = 2.0; // High sound amplification during splash
+          source.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        carVideo.play().catch(() => {});
+      } catch (err) {}
+    }
+
+    // Default sound ON: Set volume to high and attempt playback
     if (carVideo) {
       carVideo.defaultMuted = false;
       carVideo.muted = false;
@@ -2366,23 +2392,21 @@
 
       const playPromise = carVideo.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // If browser blocks unmuted autoplay without prior gesture, start playing and unmute on first interaction
+        playPromise.then(() => {
+          engageHighSound();
+        }).catch(() => {
+          // If browser restricts unmuted autoplay on initial load, play muted and instantly engage high sound on first user touch/gesture
           carVideo.muted = true;
           carVideo.play().catch(() => {});
         });
       }
     }
 
-    // Global listener: Immediately engage audio on first interaction if initially held by browser policy
+    // Global listener: Engage high sound instantly on first touch/click/key if held by browser autoplay policy
     ['touchstart', 'touchend', 'pointerdown', 'mousedown', 'click', 'keydown'].forEach(evt => {
       window.addEventListener(evt, () => {
-        if (!isRemoved && carVideo && carVideo.muted) {
-          try {
-            carVideo.muted = false;
-            carVideo.volume = 1.0;
-            carVideo.play().catch(() => {});
-          } catch (err) {}
+        if (!isRemoved && carVideo) {
+          engageHighSound();
         }
       }, { passive: true, once: true });
     });
@@ -2409,12 +2433,21 @@
       if (isRemoved) return;
       isRemoved = true;
 
-      // Immediately shut off sound and pause video
+      // STRICTLY KILL ALL AUDIO IMMEDIATELY (Sound turns to 0)
+      if (gainNode) {
+        try { gainNode.gain.value = 0; } catch (e) {}
+      }
+      if (audioCtx) {
+        try { audioCtx.close(); } catch (e) {}
+      }
       if (carVideo) {
         try {
           carVideo.pause();
           carVideo.muted = true;
           carVideo.volume = 0;
+          carVideo.currentTime = 0;
+          carVideo.removeAttribute('src');
+          carVideo.load();
         } catch (e) {}
       }
 
@@ -2426,13 +2459,6 @@
 
       // 3. Completely remove splash from DOM
       setTimeout(() => {
-        if (carVideo) {
-          try {
-            carVideo.pause();
-            carVideo.muted = true;
-            carVideo.volume = 0;
-          } catch (e) {}
-        }
         if (splash && splash.parentNode) {
           splash.parentNode.removeChild(splash);
         }
