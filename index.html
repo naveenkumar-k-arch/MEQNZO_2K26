@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MEQNZO_2K26 | Igniting Mechanical Excellence</title>
+  <!-- Preload splash video for instant loading -->
+  <link rel="preload" href="hero_clip_11_14.mp4" as="video" type="video/mp4">
   <link rel="icon" type="image/png" href="images/me-logo.png">
   <!-- Google Fonts: Oswald for bold headings, Montserrat for clean UI, Permanent Marker / Caveat for handwritten accents -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -303,7 +305,7 @@
       width: 0%;
       background: linear-gradient(90deg, #ff1e27, #ff9500, #ffeb3b);
       box-shadow: 0 0 15px rgba(255, 30, 39, 0.9);
-      animation: fillTimer 4s linear forwards;
+      animation: fillTimer 2s linear forwards;
     }
 
     @keyframes fillTimer { 0% { width: 0%; } 100% { width: 100%; } }
@@ -1739,7 +1741,7 @@
     
     <!-- Real Video Background -->
     <div class="splash-video-wrap">
-      <video id="carDriftVideo" autoplay loop playsinline preload="auto">
+      <video id="carDriftVideo" autoplay loop playsinline muted preload="auto">
         <source src="hero_clip_11_14.mp4" type="video/mp4">
         <source src="drift.webm" type="video/webm">
       </video>
@@ -2671,7 +2673,7 @@
        JAVASCRIPT: 3-SECOND TIMER & REMOVE SPLASH
        ═════════════════════════════════════════════════════════════════ -->
   <script>
-    const DURATION = 4000; // Exact 4 Seconds
+    const DURATION = 2000; // Fast 2 Seconds
     let startTime = null;
     let isRemoved = false;
 
