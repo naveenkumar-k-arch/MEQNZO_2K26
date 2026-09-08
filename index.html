@@ -97,22 +97,18 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.85) contrast(1.15) saturate(1.2);
+      filter: brightness(1.0) contrast(1.04);
     }
 
     .splash-video-overlay {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(5, 5, 10, 0.3) 0%, rgba(5, 0, 0, 0.75) 60%, rgba(0,0,0,0.95) 100%);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.6) 100%);
       z-index: 2;
     }
 
     .splash-scanlines {
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.25) 0px, rgba(0,0,0,0.25) 1px, transparent 1px, transparent 3px);
-      z-index: 3;
-      pointer-events: none;
+      display: none !important;
     }
 
     .splash-top-hud {
@@ -1748,45 +1744,26 @@
         <source src="drift.webm" type="video/webm">
       </video>
       <div class="splash-video-overlay"></div>
-      <div class="splash-scanlines"></div>
     </div>
 
-    <!-- Splash Top HUD -->
-    <div class="splash-top-hud">
-      <div class="hud-title">
-        <span class="hud-dot"></span>
-        <span>MEQNZO 2K26 // DRIFT INTRO</span>
-      </div>
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <button id="splashSoundBtn" class="sound-splash-btn" onclick="toggleSplashSound(event)" title="Toggle Audio">
-          <span id="soundIcon">🔊</span> <span id="soundText">AUDIO ON</span>
-        </button>
-        <div class="hud-timer" id="splashTimer">04.00s</div>
-        <button class="skip-splash-btn" onclick="removeSplash()">SKIP &rarr;</button>
-      </div>
-    </div>
+    <!-- Top Spacer for vertical balance -->
+    <div style="height: 40px;"></div>
 
-    <!-- Splash Center Branding -->
+    <!-- Splash Center Branding: Logo & Title Only -->
     <div class="splash-center-content">
       <img src="images/me-logo.png" alt="MEQNZO Logo" class="splash-logo-img">
-      <div class="splash-tag">&#9889; DRIFT IGNITION &#9889;</div>
-      <div id="soundBadge" class="splash-sound-pill" onclick="forceUnmute(event)" title="Toggle Sound">
-        <span>🔊 SOUND ON</span>
-      </div>
       <h1 class="splash-big-title">MEQNZO 2K26</h1>
-      <div class="splash-sub-text">IGNITING MECHANICAL EXCELLENCE</div>
     </div>
 
-    <!-- Splash Bottom Progress Bar -->
+    <!-- Splash Bottom Progress Bar: Loading of the club -->
     <div class="splash-bottom-bar">
       <div class="splash-bar-labels">
-        <span>NITRO CHARGE</span>
+        <span>LOADING MEQNZO CLUB</span>
         <span id="splashPct">0%</span>
       </div>
       <div class="splash-track">
         <div class="splash-fill" id="splashFill"></div>
       </div>
-      <div class="splash-hint">Opening website in 4 seconds...</div>
     </div>
 
   </div>
@@ -2378,42 +2355,8 @@
 
     const splash = document.getElementById('splash');
     const mainApp = document.getElementById('main-app');
-    const splashTimer = document.getElementById('splashTimer');
     const splashPct = document.getElementById('splashPct');
     const carVideo = document.getElementById('carDriftVideo');
-    const soundIcon = document.getElementById('soundIcon');
-    const soundText = document.getElementById('soundText');
-
-    function updateSoundUI(hasSound) {
-      if (soundIcon && soundText) {
-        soundIcon.textContent = hasSound ? '🔊' : '🔇';
-        soundText.textContent = hasSound ? 'AUDIO ON' : 'TAP FOR SOUND';
-      }
-      const badge = document.getElementById('soundBadge');
-      if (badge) {
-        badge.innerHTML = hasSound ? '<span>🔊 SOUND ON</span>' : '<span>🔇 TAP FOR SOUND</span>';
-      }
-    }
-
-    function forceUnmute(e) {
-      if (e) e.stopPropagation();
-      if (!carVideo) return;
-      carVideo.muted = false;
-      carVideo.volume = 1.0;
-      updateSoundUI(true);
-      carVideo.play().catch(() => {});
-    }
-
-    function toggleSplashSound(e) {
-      if (e) e.stopPropagation();
-      if (!carVideo) return;
-      carVideo.muted = !carVideo.muted;
-      if (!carVideo.muted) {
-        carVideo.volume = 1.0;
-        carVideo.play().catch(() => {});
-      }
-      updateSoundUI(!carVideo.muted);
-    }
 
     // Default sound ON: Set volume to max and muted to false
     if (carVideo) {
@@ -2423,35 +2366,34 @@
 
       const playPromise = carVideo.play();
       if (playPromise !== undefined) {
-        playPromise.then(() => {
-          updateSoundUI(true);
-        }).catch(() => {
-          // If browser restricts unmuted autoplay on cold start, play muted and instantly unmute on touch
+        playPromise.catch(() => {
+          // If browser blocks unmuted autoplay without prior gesture, start playing and unmute on first interaction
           carVideo.muted = true;
           carVideo.play().catch(() => {});
-          updateSoundUI(false);
         });
       }
     }
 
-    // Global listener on any screen touch/click/key to immediately engage audio
+    // Global listener: Immediately engage audio on first interaction if initially held by browser policy
     ['touchstart', 'touchend', 'pointerdown', 'mousedown', 'click', 'keydown'].forEach(evt => {
       window.addEventListener(evt, () => {
-        if (carVideo && carVideo.muted) {
-          forceUnmute();
+        if (!isRemoved && carVideo && carVideo.muted) {
+          try {
+            carVideo.muted = false;
+            carVideo.volume = 1.0;
+            carVideo.play().catch(() => {});
+          } catch (err) {}
         }
-      }, { passive: true });
+      }, { passive: true, once: true });
     });
 
     // High precision countdown loop
     function updateCountdown(timestamp) {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
-      const remaining = Math.max(0, DURATION - elapsed);
       const progress = Math.min(1, elapsed / DURATION);
 
-      splashTimer.textContent = (remaining / 1000).toFixed(2) + 's';
-      splashPct.textContent = Math.floor(progress * 100) + '%';
+      if (splashPct) splashPct.textContent = Math.floor(progress * 100) + '%';
 
       if (elapsed < DURATION && !isRemoved) {
         requestAnimationFrame(updateCountdown);
@@ -2467,19 +2409,34 @@
       if (isRemoved) return;
       isRemoved = true;
 
-      // 1. Fade out splash with cinematic blur/zoom transition
-      splash.classList.add('fade-out');
+      // Immediately shut off sound and pause video
+      if (carVideo) {
+        try {
+          carVideo.pause();
+          carVideo.muted = true;
+          carVideo.volume = 0;
+        } catch (e) {}
+      }
+
+      // 1. Fade out splash with cinematic transition
+      if (splash) splash.classList.add('fade-out');
 
       // 2. Reveal main website with zoom-in crossfade
-      mainApp.classList.add('active');
+      if (mainApp) mainApp.classList.add('active');
 
-      // 3. Completely remove splash from DOM after animation completes
+      // 3. Completely remove splash from DOM
       setTimeout(() => {
-        if (carVideo) carVideo.pause();
+        if (carVideo) {
+          try {
+            carVideo.pause();
+            carVideo.muted = true;
+            carVideo.volume = 0;
+          } catch (e) {}
+        }
         if (splash && splash.parentNode) {
           splash.parentNode.removeChild(splash);
         }
-      }, 1100);
+      }, 950);
     }
 
     // ═════════════════════════════════════════════════════════════════
