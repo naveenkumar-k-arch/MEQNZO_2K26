@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MEQNZO_2K26 | Igniting Mechanical Excellence</title>
-  <!-- Preload splash video for instant loading -->
+  <!-- Preload splash video and drift audio for instant loading -->
   <link rel="preload" href="hero_clip_11_14.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="drift-sound.wav" as="audio">
   <link rel="icon" type="image/png" href="images/me-logo.png">
   <!-- Google Fonts: Oswald for bold headings, Montserrat for clean UI, Permanent Marker / Caveat for handwritten accents -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1811,6 +1812,9 @@
         <source src="hero_clip_11_14.mp4" type="video/mp4">
         <source src="drift.webm" type="video/webm">
       </video>
+      <audio id="driftAudio" preload="auto" loop>
+        <source src="drift-sound.wav" type="audio/wav">
+      </audio>
       <div class="splash-video-overlay"></div>
     </div>
 
@@ -2729,33 +2733,49 @@
     const mainApp = document.getElementById('main-app');
     const splashPct = document.getElementById('splashPct');
     const carVideo = document.getElementById('carDriftVideo');
+    const driftAudio = document.getElementById('driftAudio');
 
-    function enableSplashAudio() {
-      if (!carVideo || isRemoved) return;
-      carVideo.muted = false;
-      carVideo.volume = 1.0;
-      carVideo.play().catch(() => {});
+    function startSplashAudio() {
+      if (isRemoved) return;
+      if (driftAudio) {
+        driftAudio.muted = false;
+        driftAudio.volume = 1.0;
+        const aPlay = driftAudio.play();
+        if (aPlay !== undefined) aPlay.catch(() => {});
+      }
+      if (carVideo) {
+        carVideo.muted = false;
+        carVideo.volume = 1.0;
+        const vPlay = carVideo.play();
+        if (vPlay !== undefined) vPlay.catch(() => {});
+      }
     }
 
-    // Default audio ON immediately on page load
+    // Default sound ON: Play immediately on page load
     if (carVideo) {
       carVideo.volume = 1.0;
       carVideo.muted = false;
       const p = carVideo.play();
       if (p !== undefined) {
         p.catch(() => {
-          // If browser policy requires user interaction before audio, start video and auto-unmute on first gesture
+          // If browser policy requires user interaction before unmuted audio, play video and unlock on first gesture
           carVideo.muted = true;
           carVideo.play().catch(() => {});
         });
       }
     }
+    if (driftAudio) {
+      driftAudio.volume = 1.0;
+      driftAudio.muted = false;
+      const ap = driftAudio.play();
+      if (ap !== undefined) ap.catch(() => {});
+    }
 
-    // Silently unlock sound on first user touch/click anywhere (no prompt or asking)
+    // Silently engage full sound on first touch/click/key anywhere (no prompt or asking)
     ['click', 'touchstart', 'touchend', 'pointerdown', 'mousedown', 'keydown'].forEach(evt => {
       window.addEventListener(evt, () => {
-        if (!isRemoved && carVideo) {
-          enableSplashAudio();
+        if (!isRemoved) {
+          startSplashAudio();
         }
       }, { passive: true, once: true });
     });
@@ -2783,6 +2803,15 @@
       isRemoved = true;
 
       // STRICTLY KILL ALL AUDIO IMMEDIATELY (Sound turns to 0)
+      if (driftAudio) {
+        try {
+          driftAudio.pause();
+          driftAudio.volume = 0;
+          driftAudio.currentTime = 0;
+          driftAudio.removeAttribute('src');
+          driftAudio.load();
+        } catch (e) {}
+      }
       if (carVideo) {
         try {
           carVideo.pause();
