@@ -1746,12 +1746,8 @@
       <div class="splash-video-overlay"></div>
     </div>
 
-    <!-- Splash Top Sound Indicator / Tap-to-Unmute -->
-    <div style="z-index: 25; display: flex; justify-content: center; align-items: center; min-height: 44px;">
-      <button id="splashUnmutePill" class="splash-sound-pill" onclick="triggerSplashAudio(event)" style="cursor: pointer; border: 1px solid #ffc400; background: rgba(0,0,0,0.65); padding: 7px 18px; border-radius: 25px; font-weight: 800; font-size: 0.78rem;">
-        <span id="pillIcon">🔊</span> <span id="pillText">TAP ANYWHERE FOR SOUND</span>
-      </button>
-    </div>
+    <!-- Top Spacer for vertical balance -->
+    <div style="height: 40px;"></div>
 
     <!-- Splash Center Branding: Logo & Title Only -->
     <div class="splash-center-content">
@@ -2608,52 +2604,28 @@
     const mainApp = document.getElementById('main-app');
     const splashPct = document.getElementById('splashPct');
     const carVideo = document.getElementById('carDriftVideo');
-    const unmutePill = document.getElementById('splashUnmutePill');
-
-    function triggerSplashAudio(e) {
-      if (e) e.stopPropagation();
-      if (!carVideo || isRemoved) return;
-      carVideo.muted = false;
-      carVideo.volume = 1.0;
-      carVideo.play().then(() => {
-        const pillText = document.getElementById('pillText');
-        if (pillText) pillText.textContent = 'SOUND ACTIVE (HIGH)';
-        if (unmutePill) {
-          unmutePill.style.borderColor = '#00ff88';
-          unmutePill.style.color = '#00ff88';
-          unmutePill.style.boxShadow = '0 0 16px rgba(0,255,136,0.6)';
-        }
-      }).catch(() => {});
-    }
-
-    // Try unmuted high sound on initial load
+    // Auto-engage sound immediately when opened
     if (carVideo) {
       carVideo.volume = 1.0;
       carVideo.muted = false;
 
       const p = carVideo.play();
       if (p !== undefined) {
-        p.then(() => {
-          const pillText = document.getElementById('pillText');
-          if (pillText) pillText.textContent = 'SOUND ACTIVE (HIGH)';
-          if (unmutePill) {
-            unmutePill.style.borderColor = '#00ff88';
-            unmutePill.style.color = '#00ff88';
-            unmutePill.style.boxShadow = '0 0 16px rgba(0,255,136,0.6)';
-          }
-        }).catch(() => {
-          // If browser restricts unmuted autoplay, play muted and unlock sound on first touch
+        p.catch(() => {
+          // If browser strictly insists on first gesture, start playback and unmute on earliest passive interaction
           carVideo.muted = true;
           carVideo.play().catch(() => {});
         });
       }
     }
 
-    // Unmute on the very first touch/click ANYWHERE on screen
-    ['click', 'touchstart', 'touchend', 'pointerdown', 'mousedown', 'keydown'].forEach(evt => {
+    // Auto unmute immediately on any interaction without needing buttons
+    ['click', 'touchstart', 'touchend', 'pointerdown', 'mousedown', 'keydown', 'scroll'].forEach(evt => {
       window.addEventListener(evt, () => {
-        if (!isRemoved && carVideo && carVideo.muted) {
-          triggerSplashAudio();
+        if (!isRemoved && carVideo) {
+          carVideo.muted = false;
+          carVideo.volume = 1.0;
+          carVideo.play().catch(() => {});
         }
       }, { passive: true, once: true });
     });
