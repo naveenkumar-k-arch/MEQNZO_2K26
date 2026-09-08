@@ -1486,20 +1486,20 @@
         max-width: 100% !important;
       }
 
-      /* Horizontal event cards — exact match to reference */
+      /* Vertical event cards on mobile for full names and coordinator details */
       .events-cards-grid {
         display: flex !important;
         flex-direction: column !important;
-        gap: 14px !important;
+        gap: 18px !important;
         width: 100% !important;
       }
       .event-item-card {
         display: flex !important;
-        flex-direction: row !important;
+        flex-direction: column !important;
         align-items: stretch !important;
         gap: 12px !important;
-        padding: 12px !important;
-        border-radius: 12px !important;
+        padding: 14px !important;
+        border-radius: 14px !important;
         background: #0c0d12 !important;
         border: 1px solid rgba(255, 30, 39, 0.45) !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
@@ -1515,22 +1515,22 @@
         align-items: center !important;
         gap: 6px !important;
         color: #ffc400 !important;
-        font-size: 0.68rem !important;
+        font-size: 0.70rem !important;
         font-weight: 800 !important;
         letter-spacing: 0.08em !important;
         text-transform: uppercase !important;
-        margin-bottom: 3px !important;
+        margin-bottom: 4px !important;
       }
-      .card-mobile-cat svg { width: 13px !important; height: 13px !important; fill: currentColor !important; }
+      .card-mobile-cat svg { width: 14px !important; height: 14px !important; fill: currentColor !important; }
       .event-item-card .card-image-wrap {
-        width: 96px !important;
-        min-width: 96px !important;
-        max-width: 96px !important;
-        height: 96px !important;
-        border-radius: 8px !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: 180px !important;
+        border-radius: 10px !important;
         overflow: hidden !important;
         flex-shrink: 0 !important;
-        margin: 0 !important;
+        margin: 0 0 6px 0 !important;
         border: 1px solid rgba(255, 30, 39, 0.25) !important;
       }
       .event-item-card .card-image-wrap img {
@@ -1542,60 +1542,92 @@
         padding: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: space-between !important;
-        flex: 1 !important;
+        width: 100% !important;
         min-width: 0 !important;
       }
       .card-event-title {
         font-family: 'Permanent Marker', cursive !important;
-        font-size: 1.05rem !important;
+        font-size: 1.15rem !important;
         letter-spacing: 0.03em !important;
         color: #ffffff !important;
-        margin-bottom: 3px !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        margin-bottom: 4px !important;
+        white-space: normal !important;
+        overflow: visible !important;
       }
       .card-event-desc {
-        font-size: 0.70rem !important;
-        line-height: 1.32 !important;
+        font-size: 0.75rem !important;
+        line-height: 1.38 !important;
         color: #9ca3af !important;
-        margin-bottom: 5px !important;
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2 !important;
-        -webkit-box-orient: vertical !important;
-        overflow: hidden !important;
+        margin-bottom: 8px !important;
+        display: block !important;
+        -webkit-line-clamp: unset !important;
+        overflow: visible !important;
       }
       .card-schedule {
         display: flex !important;
         flex-direction: column !important;
-        gap: 3px !important;
-        margin-bottom: 4px !important;
+        gap: 4px !important;
+        margin-bottom: 8px !important;
       }
       .sched-row {
-        font-size: 0.65rem !important;
-        gap: 5px !important;
+        font-size: 0.70rem !important;
+        gap: 6px !important;
         color: #d1d5db !important;
       }
       .sched-row svg {
-        width: 12px !important;
-        height: 12px !important;
+        width: 13px !important;
+        height: 13px !important;
         fill: var(--red-primary) !important;
       }
+      .card-coordinators {
+        margin-top: 8px !important;
+        margin-bottom: 12px !important;
+        padding: 9px 12px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 8px !important;
+        width: 100% !important;
+      }
+      .card-coordinators a {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        gap: 8px !important;
+        padding: 2px 0 !important;
+      }
+      .card-coordinators a span:first-child {
+        text-align: left !important;
+        white-space: nowrap !important;
+        font-size: 0.82rem !important;
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+      }
+      .card-coordinators a span:last-child {
+        text-align: right !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        margin-left: auto !important;
+        font-family: monospace !important;
+        font-size: 0.76rem !important;
+        color: #ff8888 !important;
+      }
       .event-item-card .btn-card-explore {
-        align-self: flex-end !important;
-        padding: 4px 12px !important;
-        font-size: 0.65rem !important;
+        align-self: flex-start !important;
+        padding: 6px 16px !important;
+        font-size: 0.72rem !important;
         font-weight: 700 !important;
         border-radius: 20px !important;
         border: 1px solid #ffd700 !important;
-        background: transparent !important;
+        background: rgba(255, 215, 0, 0.06) !important;
         color: #ffd700 !important;
-        margin-top: auto !important;
+        margin-top: 4px !important;
         text-decoration: none !important;
         display: inline-flex !important;
         align-items: center !important;
-        gap: 4px !important;
+        gap: 5px !important;
       }
 
       #contact {
@@ -1826,7 +1858,6 @@
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 
@@ -1866,7 +1897,6 @@
         <li><a href="#home" class="drawer-link active">Home</a></li>
         <li><a href="#events" class="drawer-link">Events</a></li>
         <li><a href="#about" class="drawer-link">About</a></li>
-        <li><a href="#gallery" class="drawer-link">Gallery</a></li>
         <li><a href="#contact" class="drawer-link">Contact</a></li>
         <li><a href="https://www.instagram.com/meqnzo_2k26?stkn=eXd6czdieXB6N201" target="_blank" rel="noopener noreferrer" class="drawer-link" style="color: #f5b300;">Instagram &#8599;</a></li>
       </ul>
@@ -2670,8 +2700,7 @@
           <li><a href="#home">Home</a></li>
           <li><a href="#events">Events</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
 
         <div class="footer-socials">
