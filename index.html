@@ -843,6 +843,50 @@
       color: var(--yellow-accent);
     }
 
+    /* Overall Coordinator Toggle */
+    .overall-coord-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      padding: 6px 0 4px;
+      margin-top: 6px;
+      color: #9ca3af;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .overall-coord-toggle:hover { color: #ffc400; }
+    .overall-coord-toggle .toggle-arrow {
+      transition: transform 0.25s ease;
+      font-size: 0.9rem;
+    }
+    .overall-coord-toggle.open .toggle-arrow { transform: rotate(180deg); }
+    .overall-coord-panel {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 6px;
+      padding: 8px 10px;
+      background: rgba(255,196,0,0.04);
+      border: 1px solid rgba(255,196,0,0.18);
+      border-radius: 7px;
+      font-size: 0.78rem;
+      animation: fadeSlideIn 0.22s ease;
+    }
+    .overall-coord-panel.open { display: flex; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     /* ═════════════════════════════════════════════════════════════════
        STATS COUNTER RIBBON
        ═════════════════════════════════════════════════════════════════ */
@@ -1993,10 +2037,6 @@
             </div>
                         <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
-              <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; color: #ffc400; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;">
-                <span style="display:inline-block;width:12px;height:2px;background:#ffc400;border-radius:1px;"></span>
-                Coordinators
-              </div>
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+918925070307" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>K. Dhanachezhian</span>
@@ -2005,6 +2045,20 @@
                 <a href="tel:+919345473501" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>S. Aravindhakumar</span>
                   <span style="color: #ff8888; font-family: monospace; font-size: 0.75rem;">+91 93454 73501</span>
+                </a>
+              </div>
+              <!-- Overall Coordinators Toggle -->
+              <button class="overall-coord-toggle" onclick="toggleOverallCoord(this)">
+                <span>Overall Coordinators</span><span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="overall-coord-panel">
+                <a href="tel:+919360768071" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>H. Iswarya</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">93607 68071</span>
+                </a>
+                <a href="tel:+918072829681" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>K. Sriram</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">8072829681</span>
                 </a>
               </div>
             </div>
@@ -2042,10 +2096,6 @@
             </div>
                         <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
-              <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; color: #ffc400; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;">
-                <span style="display:inline-block;width:12px;height:2px;background:#ffc400;border-radius:1px;"></span>
-                Coordinators
-              </div>
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+917092311804" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>P. Saruhasan</span>
@@ -2054,6 +2104,19 @@
                 <a href="tel:+919080853639" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>R. Hari Prasath</span>
                   <span style="color: #ff8888; font-family: monospace; font-size: 0.75rem;">+91 90808 53639</span>
+                </a>
+              </div>
+              <button class="overall-coord-toggle" onclick="toggleOverallCoord(this)">
+                <span>Overall Coordinators</span><span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="overall-coord-panel">
+                <a href="tel:+919360768071" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>H. Iswarya</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">93607 68071</span>
+                </a>
+                <a href="tel:+918072829681" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>K. Sriram</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">8072829681</span>
                 </a>
               </div>
             </div>
@@ -2091,10 +2154,6 @@
             </div>
                         <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
-              <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; color: #ffc400; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;">
-                <span style="display:inline-block;width:12px;height:2px;background:#ffc400;border-radius:1px;"></span>
-                Coordinators
-              </div>
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+918015498154" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>B. Arvind</span>
@@ -2103,6 +2162,19 @@
                 <a href="tel:+919043864115" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>S. Iyyappan</span>
                   <span style="color: #ff8888; font-family: monospace; font-size: 0.75rem;">+91 90438 64115</span>
+                </a>
+              </div>
+              <button class="overall-coord-toggle" onclick="toggleOverallCoord(this)">
+                <span>Overall Coordinators</span><span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="overall-coord-panel">
+                <a href="tel:+919360768071" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>H. Iswarya</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">93607 68071</span>
+                </a>
+                <a href="tel:+918072829681" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>K. Sriram</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">8072829681</span>
                 </a>
               </div>
             </div>
@@ -2140,10 +2212,6 @@
             </div>
                         <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
-              <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; color: #ffc400; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;">
-                <span style="display:inline-block;width:12px;height:2px;background:#ffc400;border-radius:1px;"></span>
-                Coordinators
-              </div>
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+917540004925" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>D. Dhivakar</span>
@@ -2152,6 +2220,19 @@
                 <a href="tel:+918838938559" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>P. Yuvanesh</span>
                   <span style="color: #ff8888; font-family: monospace; font-size: 0.75rem;">+91 88389 38559</span>
+                </a>
+              </div>
+              <button class="overall-coord-toggle" onclick="toggleOverallCoord(this)">
+                <span>Overall Coordinators</span><span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="overall-coord-panel">
+                <a href="tel:+919360768071" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>H. Iswarya</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">93607 68071</span>
+                </a>
+                <a href="tel:+918072829681" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>K. Sriram</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">8072829681</span>
                 </a>
               </div>
             </div>
@@ -2189,10 +2270,6 @@
             </div>
                         <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
-              <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; color: #ffc400; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;">
-                <span style="display:inline-block;width:12px;height:2px;background:#ffc400;border-radius:1px;"></span>
-                Coordinators
-              </div>
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+919080468350" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>P. Sri Vatsan</span>
@@ -2201,6 +2278,19 @@
                 <a href="tel:+917708108689" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>K. Sanjay</span>
                   <span style="color: #ff8888; font-family: monospace; font-size: 0.75rem;">+91 77081 08689</span>
+                </a>
+              </div>
+              <button class="overall-coord-toggle" onclick="toggleOverallCoord(this)">
+                <span>Overall Coordinators</span><span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="overall-coord-panel">
+                <a href="tel:+919360768071" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>H. Iswarya</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">93607 68071</span>
+                </a>
+                <a href="tel:+918072829681" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>K. Sriram</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">8072829681</span>
                 </a>
               </div>
             </div>
@@ -2238,10 +2328,6 @@
             </div>
                         <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
-              <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; color: #ffc400; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;">
-                <span style="display:inline-block;width:12px;height:2px;background:#ffc400;border-radius:1px;"></span>
-                Coordinators
-              </div>
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+918072829681" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>K. Sriram</span>
@@ -2250,6 +2336,19 @@
                 <a href="tel:+919600666348" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
                   <span>S. Lithik Kumar</span>
                   <span style="color: #ff8888; font-family: monospace; font-size: 0.75rem;">+91 96006 66348</span>
+                </a>
+              </div>
+              <button class="overall-coord-toggle" onclick="toggleOverallCoord(this)">
+                <span>Overall Coordinators</span><span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="overall-coord-panel">
+                <a href="tel:+919360768071" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>H. Iswarya</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">93607 68071</span>
+                </a>
+                <a href="tel:+918072829681" style="display:flex;justify-content:space-between;align-items:center;color:#d1d5db;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
+                  <span>K. Sriram</span>
+                  <span style="color:#ff8888;font-family:monospace;font-size:0.75rem;">8072829681</span>
                 </a>
               </div>
             </div>
@@ -2898,6 +2997,13 @@
           ticking = true;
         }
       }, { passive: true });
+    }
+
+    // Overall Coordinator accordion toggle
+    function toggleOverallCoord(btn) {
+      btn.classList.toggle('open');
+      const panel = btn.nextElementSibling;
+      if (panel) panel.classList.toggle('open');
     }
   </script>
 
