@@ -887,6 +887,103 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* Event Details & Rules Accordion Dropdown */
+    .card-details-dropdown-wrap {
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+    .event-details-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(255, 30, 39, 0.08);
+      border: 1px solid rgba(255, 30, 39, 0.28);
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      padding: 9px 12px;
+      color: #ff4d56;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+    }
+    .event-details-toggle:hover {
+      background: rgba(255, 30, 39, 0.16);
+      border-color: rgba(255, 30, 39, 0.6);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(255, 30, 39, 0.2);
+    }
+    .event-details-toggle .details-btn-text {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .event-details-toggle .details-btn-text svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+    .event-details-toggle .toggle-arrow {
+      transition: transform 0.28s ease;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .event-details-toggle.open .toggle-arrow {
+      transform: rotate(180deg);
+    }
+    .event-details-panel {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+      padding: 12px 14px;
+      background: rgba(15, 16, 22, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #d1d5db;
+      animation: fadeSlideIn 0.25s ease;
+      text-align: left;
+    }
+    .event-details-panel.open {
+      display: flex;
+    }
+    .event-details-panel .rules-sub-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffc400;
+      margin-top: 4px;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .event-details-panel p {
+      color: #c9cdd4;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .event-details-rules-list {
+      margin: 0;
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .event-details-rules-list li {
+      color: #e5e7eb;
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
     /* ═════════════════════════════════════════════════════════════════
        STATS COUNTER RIBBON
        ═════════════════════════════════════════════════════════════════ */
@@ -2035,7 +2132,28 @@
                 <span>09:30 AM - 01:00 PM</span>
               </div>
             </div>
-                        <!-- Event Coordinators -->
+            <!-- Event Details Dropdown -->
+            <div class="card-details-dropdown-wrap">
+              <button class="event-details-toggle" onclick="toggleEventDetails(this)">
+                <span class="details-btn-text">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                  <span>Event Details &amp; Rules</span>
+                </span>
+                <span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="event-details-panel">
+                <p>Present your ideas, innovative engineering concepts, and technical research before an expert panel. Showcase your technical depth, presentation skills, and problem-solving methodologies.</p>
+                <div class="rules-sub-title">&#9881; Rules and Regulations:</div>
+                <ol class="event-details-rules-list">
+                  <li>Each team can consist of 1 to 3 members.</li>
+                  <li>Presentation duration will be 8 minutes followed by 2 minutes of Q&amp;A.</li>
+                  <li>PPT slides must be submitted to coordinators prior to the session.</li>
+                  <li>Topics can cover any core Mechanical Engineering or emerging interdisciplinary domain.</li>
+                  <li>The decision of the judges will be final and binding.</li>
+                </ol>
+              </div>
+            </div>
+            <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+918925070307" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
@@ -2094,7 +2212,28 @@
                 <span>09:30 AM - 01:00 PM</span>
               </div>
             </div>
-                        <!-- Event Coordinators -->
+            <!-- Event Details Dropdown -->
+            <div class="card-details-dropdown-wrap">
+              <button class="event-details-toggle" onclick="toggleEventDetails(this)">
+                <span class="details-btn-text">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                  <span>Event Details &amp; Rules</span>
+                </span>
+                <span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="event-details-panel">
+                <p>An individual-based competition where participants will race against time to create accurate models based on a given engineering design. This event tests precision, speed, and proficiency in CAD modeling.</p>
+                <div class="rules-sub-title">&#9881; Rules and Regulations:</div>
+                <ol class="event-details-rules-list">
+                  <li>This is an individual event.</li>
+                  <li>Participants must complete the model of the given design within 45 minutes.</li>
+                  <li>The design theme will be disclosed on the spot.</li>
+                  <li>Systems equipped with software will be provided.</li>
+                  <li>The decision of the judges will be final and binding.</li>
+                </ol>
+              </div>
+            </div>
+            <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+917092311804" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
@@ -2152,7 +2291,27 @@
                 <span>09:30 AM - 01:00 PM</span>
               </div>
             </div>
-                        <!-- Event Coordinators -->
+            <!-- Event Details Dropdown -->
+            <div class="card-details-dropdown-wrap">
+              <button class="event-details-toggle" onclick="toggleEventDetails(this)">
+                <span class="details-btn-text">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                  <span>Event Details &amp; Rules</span>
+                </span>
+                <span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="event-details-panel">
+                <p>Test your engineering acumen with our technical engineering quiz! Challenge your knowledge in various engineering disciplines, problem-solving, and innovation. Compete with fellow engineers and enthusiasts to see who reigns supreme in this intellectually stimulating competition. Get ready to tackle complex questions and showcase your technical powers!</p>
+                <div class="rules-sub-title">&#9881; Rules and Regulations:</div>
+                <ol class="event-details-rules-list">
+                  <li>The Event consists of 2 rounds: Prelims and Finals.</li>
+                  <li>A Team shall consist of 3-4 members.</li>
+                  <li>Quiz master decision is final.</li>
+                  <li>Usage of Gadgets is Strictly Prohibited.</li>
+                </ol>
+              </div>
+            </div>
+            <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+918015498154" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
@@ -2210,7 +2369,27 @@
                 <span>09:30 AM - 01:00 PM</span>
               </div>
             </div>
-                        <!-- Event Coordinators -->
+            <!-- Event Details Dropdown -->
+            <div class="card-details-dropdown-wrap">
+              <button class="event-details-toggle" onclick="toggleEventDetails(this)">
+                <span class="details-btn-text">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                  <span>Event Details &amp; Rules</span>
+                </span>
+                <span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="event-details-panel">
+                <p>Dynamic debate competition where participants will be split into two opposing teams to engage in a spirited war of words on a topic revealed on the spot. This event is designed to test critical thinking, communication skills, and the ability to think on your feet.</p>
+                <div class="rules-sub-title">&#9881; Rules and Regulations:</div>
+                <ol class="event-details-rules-list">
+                  <li>The debate topic will be given on the spot.</li>
+                  <li>The competition will consist of three rounds.</li>
+                  <li>Use of foul or inappropriate language will result in immediate disqualification.</li>
+                  <li>The decision of the judges will be final and binding.</li>
+                </ol>
+              </div>
+            </div>
+            <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+917540004925" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
@@ -2268,7 +2447,28 @@
                 <span>09:30 AM - 01:00 PM</span>
               </div>
             </div>
-                        <!-- Event Coordinators -->
+            <!-- Event Details Dropdown -->
+            <div class="card-details-dropdown-wrap">
+              <button class="event-details-toggle" onclick="toggleEventDetails(this)">
+                <span class="details-btn-text">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                  <span>Event Details &amp; Rules</span>
+                </span>
+                <span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="event-details-panel">
+                <p>A fast paced and exciting team-based quiz that tests participants Mechanical Engineering Knowledge, quick thinking, reflexes, and teamwork. Teams compete against each other by answering a series of rapid-fire questions within a limited time.</p>
+                <div class="rules-sub-title">&#9881; Rules and Regulations:</div>
+                <ol class="event-details-rules-list">
+                  <li>Each team consist of 2 &ndash; 4 members.</li>
+                  <li>The event will be conduct through multiple rounds.</li>
+                  <li>Questions will be based on Mechanical Engineering and general technical knowledge.</li>
+                  <li>Each question will given only for a limited time. Teams must give their answer within the specified time.</li>
+                  <li>Usage of Gadgets is Strictly Prohibited.</li>
+                </ol>
+              </div>
+            </div>
+            <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+919080468350" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
@@ -2326,7 +2526,30 @@
                 <span>09:30 AM - 01:00 PM</span>
               </div>
             </div>
-                        <!-- Event Coordinators -->
+            <!-- Event Details Dropdown -->
+            <div class="card-details-dropdown-wrap">
+              <button class="event-details-toggle" onclick="toggleEventDetails(this)">
+                <span class="details-btn-text">
+                  <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                  <span>Event Details &amp; Rules</span>
+                </span>
+                <span class="toggle-arrow">&#8964;</span>
+              </button>
+              <div class="event-details-panel">
+                <p>An exciting AI-powered technical creative challenge that tests participants&apos; creativity, imagination, problem-solving ability, and technical understanding of AI prompting. Teams will be given technical tasks, situation, or challenges and must use AI tools to generate the best possible output through well-crafted and effective prompts.</p>
+                <div class="rules-sub-title">&#9881; Rules and Regulations:</div>
+                <ol class="event-details-rules-list">
+                  <li>Each team can consist 2 members.</li>
+                  <li>The event will be conduct through multiple technical rounds.</li>
+                  <li>Participants will be given a specific technical topic, situation, or creative task for each round.</li>
+                  <li>Team must create suitable AI prompts based on the given technical task.</li>
+                  <li>Participants may use AI tools permitted by the event coordinators.</li>
+                  <li>Teams will be evaluated based on creativity, technical understanding, prompt quality, relevance, accuracy, and final output.</li>
+                  <li>The decision of the judges will be final and binding.</li>
+                </ol>
+              </div>
+            </div>
+            <!-- Event Coordinators -->
             <div class="card-coordinators" style="margin-top: 10px; margin-bottom: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;">
               <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem;">
                 <a href="tel:+918072829681" style="display: flex; justify-content: space-between; align-items: center; color: #d1d5db; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff1e27'" onmouseout="this.style.color='#d1d5db'">
@@ -2995,6 +3218,13 @@
 
     // Overall Coordinator accordion toggle
     function toggleOverallCoord(btn) {
+      btn.classList.toggle('open');
+      const panel = btn.nextElementSibling;
+      if (panel) panel.classList.toggle('open');
+    }
+
+    // Event Details & Rules accordion toggle
+    function toggleEventDetails(btn) {
       btn.classList.toggle('open');
       const panel = btn.nextElementSibling;
       if (panel) panel.classList.toggle('open');
