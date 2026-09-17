@@ -1332,6 +1332,58 @@
       gap: 24px;
     }
 
+    .team-card {
+      background: #0c0d12;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .team-card.convener-main {
+      border: 1px solid rgba(255,196,0,0.5);
+    }
+    .team-card.convener-main:hover {
+      border-color: rgba(255,196,0,0.95);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(255,196,0,0.22);
+    }
+    .team-card.convener-sub,
+    .team-card.student-card {
+      border: 1px solid rgba(255,30,39,0.4);
+    }
+    .team-card.convener-sub:hover,
+    .team-card.student-card:hover {
+      border-color: rgba(255,30,39,0.9);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(255,30,39,0.22);
+    }
+    .team-img-wrap {
+      width: 100%;
+      height: 310px;
+      background: #050608;
+      overflow: hidden;
+      position: relative;
+    }
+    .team-img-wrap.border-gold {
+      border-bottom: 1px solid rgba(255,196,0,0.3);
+    }
+    .team-img-wrap.border-red {
+      border-bottom: 1px solid rgba(255,30,39,0.25);
+    }
+    .team-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .team-card:hover .team-img {
+      transform: scale(1.03);
+    }
+
     @media (max-width: 1080px) {
       .events-cards-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1774,6 +1826,19 @@
 
       #contact {
         padding: 45px 16px 60px !important;
+      }
+
+      /* Team Cards on Mobile: Full portrait framing */
+      .team-img-wrap {
+        height: 280px !important;
+      }
+      .team-img {
+        object-fit: cover !important;
+        object-position: center top !important;
+        transform: none !important;
+      }
+      .team-card:hover .team-img {
+        transform: none !important;
       }
 
       /* Option 1: Space-Between Alignment (Name on Left, Phone Number Flush Right) */
@@ -2613,16 +2678,16 @@
 
             <div class="feat-item">
               <div class="feat-icon">
-                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               </div>
-              <span class="feat-label">Get Recognized &amp; Build Your Profile</span>
+              <span class="feat-label">Exclusive Certificates</span>
             </div>
 
             <div class="feat-item">
               <div class="feat-icon">
                 <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
               </div>
-              <span class="feat-label">Connect With Like-Minded People</span>
+              <span class="feat-label">Expand Network</span>
             </div>
           </div>
 
@@ -2631,16 +2696,15 @@
       </div>
     </section>
 
-
     <!-- ═════════════════════════════════════════════════════════════════
-         OFFICE BEARERS / CONTACT SECTION
+         CONTACT / LEADERSHIP & STUDENT COORDINATORS SECTION
          ═════════════════════════════════════════════════════════════════ -->
     <section id="contact" style="
       background: #06070a;
       padding: 60px 54px 70px;
       border-top: 1px solid rgba(255,30,39,0.18);
     ">
-      <div style="max-width: 900px; margin: 0 auto;">
+      <div style="max-width: 1100px; margin: 0 auto;">
 
         <!-- Faculty Conveners Header -->
         <div style="margin-bottom: 30px;">
@@ -2658,9 +2722,9 @@
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-bottom:52px;">
 
           <!-- Convener: Dr. S. Thirugnanam -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,196,0,0.5);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,196,0,0.95)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,196,0,0.22)'" onmouseout="this.style.borderColor='rgba(255,196,0,0.5)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,196,0,0.3);">
-              <img src="images/faculty-thirugnanam.jpg" alt="Dr. S. Thirugnanam" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card convener-main">
+            <div class="team-img-wrap border-gold">
+              <img class="team-img" src="images/faculty-thirugnanam.jpg" alt="Dr. S. Thirugnanam">
             </div>
             <div style="padding:20px 22px;display:flex;flex-direction:column;gap:10px;flex-grow:1;">
               <div>
@@ -2675,9 +2739,9 @@
           </div>
 
           <!-- Co-Convener 1: Dr. K. Venkatesan -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.45);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.45)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/faculty-venkatesan.jpg" alt="Dr. K. Venkatesan" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card convener-sub">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/faculty-venkatesan.jpg" alt="Dr. K. Venkatesan">
             </div>
             <div style="padding:20px 22px;display:flex;flex-direction:column;gap:10px;flex-grow:1;">
               <div>
@@ -2692,9 +2756,9 @@
           </div>
 
           <!-- Co-Convener 2: Mr. R. Ashok -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.45);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.45)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/faculty-ashok.jpg" alt="Mr. R. Ashok" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card convener-sub">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/faculty-ashok.jpg" alt="Mr. R. Ashok">
             </div>
             <div style="padding:20px 22px;display:flex;flex-direction:column;gap:10px;flex-grow:1;">
               <div>
@@ -2732,9 +2796,9 @@
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-bottom:42px;">
 
           <!-- President -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.4);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.4)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/student-kathiravan.jpg" alt="S. Kathiravan" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card student-card">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/student-kathiravan.jpg" alt="S. Kathiravan">
             </div>
             <div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex-grow:1;">
               <div style="font-size:0.72rem;font-weight:800;letter-spacing:0.2em;color:#ffc400;text-transform:uppercase;">President</div>
@@ -2747,9 +2811,9 @@
           </div>
 
           <!-- Vice President -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.4);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.4)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/student-karthik.jpg" alt="C. Karthik" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card student-card">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/student-karthik.jpg" alt="C. Karthik">
             </div>
             <div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex-grow:1;">
               <div style="font-size:0.72rem;font-weight:800;letter-spacing:0.2em;color:#ffc400;text-transform:uppercase;">Vice President</div>
@@ -2762,9 +2826,9 @@
           </div>
 
           <!-- Secretary -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.4);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.4)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/student-manikandan.jpg" alt="P. Manikandan" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card student-card">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/student-manikandan.jpg" alt="P. Manikandan">
             </div>
             <div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex-grow:1;">
               <div style="font-size:0.72rem;font-weight:800;letter-spacing:0.2em;color:#ffc400;text-transform:uppercase;">Secretary</div>
@@ -2777,9 +2841,9 @@
           </div>
 
           <!-- Joint Secretary -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.4);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.4)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/student-adithya.jpg" alt="S. Adithya" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card student-card">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/student-adithya.jpg" alt="S. Adithya">
             </div>
             <div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex-grow:1;">
               <div style="font-size:0.72rem;font-weight:800;letter-spacing:0.2em;color:#ffc400;text-transform:uppercase;">Joint Secretary</div>
@@ -2792,9 +2856,9 @@
           </div>
 
           <!-- Treasurer -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.4);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.4)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/student-jeyarahul.jpg" alt="S. Jeya rahul" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card student-card">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/student-jeyarahul.jpg" alt="S. Jeya rahul">
             </div>
             <div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex-grow:1;">
               <div style="font-size:0.72rem;font-weight:800;letter-spacing:0.2em;color:#ffc400;text-transform:uppercase;">Treasurer</div>
@@ -2807,9 +2871,9 @@
           </div>
 
           <!-- Over all event coordinator (H. Iswarya) -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.4);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.4)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/student-iswarya.jpg" alt="H. Iswarya" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card student-card">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/student-iswarya.jpg" alt="H. Iswarya">
             </div>
             <div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex-grow:1;">
               <div style="font-size:0.72rem;font-weight:800;letter-spacing:0.2em;color:#ffc400;text-transform:uppercase;">Over all event coordinator</div>
@@ -2822,9 +2886,9 @@
           </div>
 
           <!-- Over all event coordinator (K. Sriram) -->
-          <div style="background:#0c0d12;border:1px solid rgba(255,30,39,0.4);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(0,0,0,0.5);transition:all 0.3s ease;" onmouseover="this.style.borderColor='rgba(255,30,39,0.9)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 35px rgba(255,30,39,0.22)'" onmouseout="this.style.borderColor='rgba(255,30,39,0.4)';this.style.transform='none';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.5)'">
-            <div style="width:100%;height:310px;background:#050608;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,30,39,0.25);">
-              <img src="images/student-sriram.jpg" alt="K. Sriram" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          <div class="team-card student-card">
+            <div class="team-img-wrap border-red">
+              <img class="team-img" src="images/student-sriram.jpg" alt="K. Sriram">
             </div>
             <div style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex-grow:1;">
               <div style="font-size:0.72rem;font-weight:800;letter-spacing:0.2em;color:#ffc400;text-transform:uppercase;">Over all event coordinator</div>
