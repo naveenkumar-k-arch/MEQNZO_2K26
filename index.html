@@ -1378,10 +1378,21 @@
       object-fit: cover;
       object-position: center top;
       display: block;
-      transition: transform 0.4s ease;
+      transition: opacity 0.3s ease;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
     }
+    .team-img.full-img {
+      object-fit: contain;
+      object-position: center center;
+      background: #050608;
+    }
+    /* No zoom on hover — preserves full image sharpness */
     .team-card:hover .team-img {
-      transform: scale(1.03);
+      opacity: 0.92;
     }
 
     @media (max-width: 1080px) {
@@ -1835,10 +1846,17 @@
       .team-img {
         object-fit: cover !important;
         object-position: center top !important;
-        transform: none !important;
+        transform: translateZ(0) !important;
+        image-rendering: -webkit-optimize-contrast !important;
+        backface-visibility: hidden !important;
+        -webkit-backface-visibility: hidden !important;
+      }
+      .team-img.full-img {
+        object-fit: contain !important;
+        object-position: center center !important;
       }
       .team-card:hover .team-img {
-        transform: none !important;
+        opacity: 0.92 !important;
       }
 
       /* Option 1: Space-Between Alignment (Name on Left, Phone Number Flush Right) */
@@ -2724,7 +2742,7 @@
           <!-- Convener: Dr. S. Thirugnanam -->
           <div class="team-card convener-main">
             <div class="team-img-wrap border-gold">
-              <img class="team-img" src="images/faculty-thirugnanam.jpg" alt="Dr. S. Thirugnanam">
+              <img class="team-img full-img" src="images/faculty-thirugnanam.jpg" alt="Dr. S. Thirugnanam">
             </div>
             <div style="padding:20px 22px;display:flex;flex-direction:column;gap:10px;flex-grow:1;">
               <div>
@@ -2741,7 +2759,7 @@
           <!-- Co-Convener 1: Dr. K. Venkatesan -->
           <div class="team-card convener-sub">
             <div class="team-img-wrap border-red">
-              <img class="team-img" src="images/faculty-venkatesan.jpg" alt="Dr. K. Venkatesan">
+              <img class="team-img full-img" src="images/faculty-venkatesan.jpg" alt="Dr. K. Venkatesan">
             </div>
             <div style="padding:20px 22px;display:flex;flex-direction:column;gap:10px;flex-grow:1;">
               <div>
@@ -2758,7 +2776,7 @@
           <!-- Co-Convener 2: Mr. R. Ashok -->
           <div class="team-card convener-sub">
             <div class="team-img-wrap border-red">
-              <img class="team-img" src="images/faculty-ashok.jpg" alt="Mr. R. Ashok">
+              <img class="team-img full-img" src="images/faculty-ashok.jpg" alt="Mr. R. Ashok">
             </div>
             <div style="padding:20px 22px;display:flex;flex-direction:column;gap:10px;flex-grow:1;">
               <div>
